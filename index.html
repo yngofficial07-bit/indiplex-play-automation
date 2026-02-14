@@ -113,11 +113,52 @@
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6'; // Aapki Key
     let database = [ mirzapurData, moneyHeistData, mismatchedData ];
 
+    // --- FIX START ---
     setTimeout(() => { 
-        document.getElementById('intro').classList.add('hide'); 
-        document.getElementById('home-page').style.display = 'block';
-        VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12 });
-        loadAutoMovies(); // TMDB data load karega
+        const intro = document.getElementById('intro');
+        const home = document.getElementById('home-page');
+        
+        if(intro) intro.classList.add('hide'); 
+        if(home) home.style.display = 'block';
+
+        // Vanta background start
+        try {
+            VANTA.NET({ 
+                el: "#vanta-canvas", 
+                mouseControls: true, 
+                touchControls: true, 
+                color: 0xff0000, 
+                backgroundColor: 0x0, 
+                points: 12 
+            });
+        } catch(e) { console.log("Vanta error ignored"); }
+
+        loadAutoMovies(); 
+    }, 6000);
+
+    async function loadAutoMovies() {
+        const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
+        try {
+            const response = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`);
+            const data = await response.json();
+            
+            if(data.results) {
+                const autoItems = data.results.map(item => ({
+                    title: item.title || item.name,
+                    poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                    isAuto: true,
+                    id: item.id,
+                    type: item.media_type
+                }));
+                database = [...database, ...autoItems];
+                displayContent(database);
+            }
+        } catch (e) { 
+            console.log("TMDB Fetch Failed, showing local database only");
+            displayContent(database); 
+        }
+    }
+    // --- FIX END ---
     }, 6000);
 
     // Automation: Fetch Trending from TMDB
@@ -202,3 +243,4 @@
 </script>
 </body>
 </html>
+
