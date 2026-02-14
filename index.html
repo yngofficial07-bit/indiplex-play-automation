@@ -13,100 +13,62 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@800&family=Orbitron:wght@400;900&family=Roboto:wght@300;400;700&family=Montserrat:wght@200;900&display=swap');
         
-        :root { 
-            --red: #ff0000; 
-            --glass-border: rgba(255, 255, 255, 0.1); 
-            --neon-blue: #00d2ff;
-        }
+        :root { --red: #ff0000; --glass-border: rgba(255, 255, 255, 0.1); --neon-blue: #00d2ff; }
 
-        body, html { 
-            margin: 0; padding: 0; background: #000; color: white; 
-            font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; 
-        }
+        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; }
 
         /* --- ABYSSAL VOID INTRO (STRICTLY SAVED) --- */
-        #intro { 
-            height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
-            background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
-            top:0; left:0; overflow: hidden;
-        }
+        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); top:0; left:0; overflow: hidden; }
         #abyss-canvas { position: absolute; inset: 0; z-index: 1; }
         .vignette-intro { position: absolute; inset: 0; z-index: 50; pointer-events: none; background: radial-gradient(circle, transparent 10%, #000 95%); }
         #heartbeat-line { position: absolute; width: 0; height: 1.5px; background: #fff; box-shadow: 0 0 25px #fff, 0 0 50px #fff; z-index: 1000; animation: slice 3s cubic-bezier(0.1, 0, 0.1, 1) forwards; }
         @keyframes slice { 0% { width: 0; opacity: 0; } 50% { width: 100%; opacity: 1; } 100% { width: 0; opacity: 0; } }
         .monolith-stage { position: relative; z-index: 100; perspective: 3000px; }
-        .silver-block {
-            position: relative; width: clamp(300px, 85vw, 1000px); height: clamp(160px, 35vh, 450px);
-            background: linear-gradient(135deg, #000 0%, #333 15%, #aaa 35%, #fff 50%, #aaa 65%, #333 85%, #000 100%);
-            background-size: 300% 300%; border-radius: 2px; display: flex; justify-content: center; align-items: center;
-            opacity: 0; transform: scale(0.1) translateZ(-2000px) rotateX(20deg);
-            box-shadow: 0 0 150px rgba(255, 255, 255, 0.15), inset 0 0 100px rgba(0, 0, 0, 1);
-            animation: monolithArrival 1.8s cubic-bezier(0.1, 0.9, 0.2, 1) forwards 3.2s, chromeFlow 6s linear infinite;
-        }
+        .silver-block { position: relative; width: clamp(300px, 85vw, 1000px); height: clamp(160px, 35vh, 450px); background: linear-gradient(135deg, #000 0%, #333 15%, #aaa 35%, #fff 50%, #aaa 65%, #333 85%, #000 100%); background-size: 300% 300%; border-radius: 2px; display: flex; justify-content: center; align-items: center; opacity: 0; transform: scale(0.1) translateZ(-2000px) rotateX(20deg); box-shadow: 0 0 150px rgba(255, 255, 255, 0.15), inset 0 0 100px rgba(0, 0, 0, 1); animation: monolithArrival 1.8s cubic-bezier(0.1, 0.9, 0.2, 1) forwards 3.2s, chromeFlow 6s linear infinite; }
         .indiplex-brand { font-family: 'Syncopate', sans-serif; font-size: clamp(2.5rem, 15vw, 11rem); font-weight: 800; letter-spacing: 20px; color: #000; text-transform: uppercase; mix-blend-mode: multiply; opacity: 0; animation: textManifest 2s cubic-bezier(0.19, 1, 0.22, 1) forwards 4s; }
         @keyframes monolithArrival { 0% { opacity: 0; transform: scale(0.1) translateZ(-2000px) rotateX(20deg); filter: blur(50px); } 100% { opacity: 1; transform: scale(1) translateZ(0) rotateX(0deg); filter: blur(0); } }
         @keyframes chromeFlow { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
         @keyframes textManifest { 0% { opacity: 0; letter-spacing: 100px; transform: scale(0.8); } 100% { opacity: 1; letter-spacing: -6px; transform: scale(1); } }
 
-        /* --- NAVIGATION & DYNAMIC SCROLL --- */
-        nav { 
-            position: fixed; top: 0; width: 100%; height: 85px; z-index: 5000; 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 5%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(25px); 
-            border-bottom: 1px solid var(--glass-border); box-sizing: border-box;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Sticky Class: Scroll effect */
+        /* --- NAVIGATION & HUB --- */
+        nav { position: fixed; top: 0; width: 100%; height: 85px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); transition: 0.4s; }
         nav.scrolled { height: 60px; background: rgba(0,0,0,1); border-bottom-color: var(--red); }
         nav.scrolled .logo-motto { display: none; }
-        nav.scrolled .logo-nav { font-size: 20px; }
+        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 22px; background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
+        .logo-motto { font-size: 7px; color: #666; letter-spacing: 1.2px; font-family: 'Montserrat'; font-weight: 900; text-transform: uppercase; }
 
-        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(18px, 4vw, 26px); background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; transition: 0.3s; }
-        .logo-motto { font-size: 7px; color: #666; letter-spacing: 1.2px; margin-top: 4px; font-family: 'Montserrat'; font-weight: 900; text-transform: uppercase; }
-
-        /* CATEGORIES BAR (HUB STYLE) */
-        .hub-categories {
-            display: flex; gap: 10px; overflow-x: auto; padding: 12px 5%; background: rgba(8,8,8,1);
-            scrollbar-width: none; white-space: nowrap; position: fixed; top: 85px; width: 100%; z-index: 4000;
-            border-bottom: 1px solid rgba(255,255,255,0.05); box-sizing: border-box;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        /* Jab Nav scroll ho jaye */
+        .hub-categories { display: flex; gap: 10px; overflow-x: auto; padding: 12px 5%; background: #080808; scrollbar-width: none; position: fixed; top: 85px; width: 100%; z-index: 4000; border-bottom: 1px solid rgba(255,255,255,0.05); transition: 0.4s; }
         nav.scrolled + .hub-categories { top: 60px; background: #000; border-bottom: 1px solid rgba(255,0,0,0.3); }
+        .cat-chip { background: #1a1a1a; border: 1px solid #333; color: #888; padding: 7px 16px; border-radius: 4px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .cat-chip.active { background: #ff9900; color: #000; border-color: #ff9900; font-weight: 900; }
 
-        .hub-categories::-webkit-scrollbar { display: none; }
-        .cat-chip { background: #1a1a1a; border: 1px solid #333; color: #888; padding: 7px 16px; border-radius: 4px; font-family: 'Orbitron'; font-size: 9px; cursor: pointer; transition: 0.3s; }
-        .cat-chip:hover, .cat-chip.active { background: #ff9900; color: #000; border-color: #ff9900; font-weight: 900; }
-
-        /* CONTENT AREA */
+        /* --- RGB 3D CARDS --- */
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
-        #home-page { display: none; position: relative; z-index: 10; padding-top: 155px; } /* Corrected Padding */
-        
-        /* --- RGB 3D CARDS (INTACT) --- */
-        .card { position: relative; border-radius: 15px; overflow: hidden; background: #000; cursor: pointer; padding: 2px; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 280px; transform-style: preserve-3d; }
+        #home-page { display: none; position: relative; z-index: 10; padding-top: 155px; }
+        .card { position: relative; border-radius: 15px; overflow: hidden; background: #000; cursor: pointer; padding: 2px; transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 280px; transform-style: preserve-3d; }
         .card::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent, #ff0000, #00d2ff, #7a00ff, #ff0000); animation: rotateBorder 4s linear infinite; z-index: -2; opacity: 0; transition: 0.5s; }
         .card:hover::before { opacity: 1; }
         .card:hover { transform: translateY(-10px) rotateX(10deg) rotateY(6deg); }
         .card::after { content: ""; position: absolute; inset: 3px; background: #000; border-radius: 13px; z-index: -1; }
         @keyframes rotateBorder { 100% { transform: rotate(360deg); } }
-        .card img { width: 100%; height: 210px; object-fit: cover; border-radius: 13px 13px 0 0; }
-        .card h3 { font-size: 10px; font-family: 'Montserrat'; font-weight: 700; padding: 10px; text-align: center; margin: 0; height: 50px; display: flex; align-items: center; justify-content: center; }
-        .peek-info { position: absolute; bottom: 55px; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); opacity: 0; transition: 0.4s; font-size: 9px; font-weight: 900; text-align: center; color: var(--neon-blue); }
+        .card img { width: 100%; height: 210px; object-fit: cover; }
+        .card h3 { font-size: 10px; font-family: 'Montserrat'; padding: 10px; text-align: center; margin: 0; }
+        .peek-info { position: absolute; bottom: 55px; left: 0; width: 100%; padding: 10px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); opacity: 0; transition: 0.4s; font-size: 9px; text-align: center; color: var(--neon-blue); font-weight: 900; }
         .card:hover .peek-info { opacity: 1; }
 
-        .section-title { padding-left: 12px; font-family: 'Orbitron'; font-size: 13px; color: var(--red); margin: 30px 0 15px 5%; border-left: 4px solid var(--red); letter-spacing: 2px; font-weight: 900; }
+        .section-title { padding-left: 12px; font-family: 'Orbitron'; font-size: 13px; color: var(--red); margin: 30px 0 15px 5%; border-left: 4px solid var(--red); font-weight: 900; }
         .container { padding: 0 5% 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 25px; }
 
-        /* SIDE MENU & MODALS */
-        #side-menu { position: fixed; top: 0; right: -320px; width: 310px; height: 100%; background: rgba(8,8,8,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); padding: 80px 25px; border-left: 1px solid var(--glass-border); overflow-y: auto; }
-        #side-menu.active { right: 0; }
-        .menu-item { padding: 15px; color: #888; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); font-family: 'Montserrat'; font-size: 12px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
-        .menu-item:hover { color: #fff; background: rgba(255,0,0,0.1); padding-left: 25px; }
+        /* UI ELEMENTS */
+        #details-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; z-index: 20000; align-items: center; justify-content: center; overflow-y: auto; }
+        .ep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; width: 90%; margin-top: 20px; }
+        .ep-card { background: #111; padding: 15px; border: 1px solid #222; border-radius: 8px; cursor: pointer; transition: 0.3s; }
+        .ep-card:hover { border-color: var(--red); background: #1a0000; }
         #player-ui { position: fixed; inset: 0; background: #000; display: none; z-index: 25000; }
-        .server-container { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 30002; }
-        .server-btn { background: rgba(17,17,17,0.8); color: white; border: 1px solid var(--red); padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 11px; font-family: 'Orbitron'; transition: 0.3s; }
-        #admin-modal, #about-modal, #details-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 20000; align-items: center; justify-content: center; }
-        .modal-box { background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; }
+        .server-container { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; }
+        .server-btn { background: #111; color: white; border: 1px solid var(--red); padding: 10px 20px; border-radius: 5px; font-family: 'Orbitron'; cursor: pointer; font-size: 10px; }
+        #side-menu { position: fixed; top: 0; right: -320px; width: 310px; height: 100%; background: rgba(8,8,8,0.98); z-index: 6000; transition: 0.5s; padding: 80px 25px; }
+        #side-menu.active { right: 0; }
     </style>
 </head>
 <body>
@@ -129,7 +91,7 @@
             <div class="logo-motto">YOUR PRIVACY IS OUR RESPONSIBILITY</div>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-            <input type="text" id="searchInput" oninput="searchGlobal(this.value)" placeholder="Search..." style="background:rgba(255,255,255,0.07); border:1px solid #444; color:white; padding:8px 15px; border-radius:20px; outline:none; width:clamp(100px, 15vw, 180px); font-family:'Montserrat'; font-size:11px;">
+            <input type="text" id="searchInput" oninput="searchGlobal(this.value)" placeholder="Search..." style="background:rgba(255,255,255,0.1); border:1px solid #444; color:white; padding:8px 15px; border-radius:20px; outline:none; width:130px; font-size:11px;">
             <div onclick="toggleMenu()" style="cursor:pointer; font-size:18px; color:white;"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
@@ -140,13 +102,11 @@
         <div class="cat-chip" onclick="loadGenre(10749, this)">ROMANCE</div>
         <div class="cat-chip" onclick="loadGenre(27, this)">HORROR</div>
         <div class="cat-chip" onclick="loadGenre(878, this)">SCI-FI</div>
-        <div class="cat-chip" onclick="loadGenre(35, this)">COMEDY</div>
         <div class="cat-chip" onclick="loadGenre(16, this)">ANIME</div>
-        <div class="cat-chip" onclick="loadGenre(18, this)">DRAMA</div>
     </div>
 
-    <div id="search-section" style="display:none;">
-        <h2 class="section-title">RESULTS <button onclick="clearSearch()" style="float:right; background:red; border:none; color:white; padding:4px 10px; border-radius:15px; font-size:9px; margin-right:5%; cursor:pointer;">X</button></h2>
+    <div id="search-section" style="display:none; padding-top:20px;">
+        <h2 class="section-title">RESULTS <span onclick="clearSearch()" style="float:right; color:red; cursor:pointer; margin-right:5%;">X</span></h2>
         <div class="container" id="search-grid"></div>
     </div>
 
@@ -158,34 +118,27 @@
     </div>
 </div>
 
-<div id="side-menu">
-    <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; margin-bottom:30px; color:red;">&times;</div>
-    <div class="menu-item" onclick="location.reload()"><i class="fa-solid fa-house"></i> HOME</div>
-    <div class="menu-item" onclick="loadGenre(28)"><i class="fa-solid fa-gun"></i> ACTION</div>
-    <div class="menu-item" onclick="loadGenre(10749)"><i class="fa-solid fa-heart"></i> ROMANTIC</div>
-    <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: red;"><i class="fa-solid fa-power-off"></i> LOGOUT</div>
-</div>
-
-<div id="details-overlay"><div onclick="closeDetails()" style="position:fixed; top:25px; right:35px; font-size:45px; cursor:pointer; color:red; z-index:21000;">&times;</div><div id="details-body" style="padding:60px 5%; width:100%;"></div></div>
+<div id="details-overlay"><div onclick="closeDetails()" style="position:fixed; top:25px; right:35px; font-size:45px; cursor:pointer; color:red;">&times;</div><div id="details-body" style="padding:60px 5%; width:100%;"></div></div>
 <div id="player-ui"><div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:25px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div><iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe><div class="server-container"><button class="server-btn" onclick="changeServer(1)">SERVER 1</button><button class="server-btn" onclick="changeServer(2)">SERVER 2</button></div></div>
-<div id="admin-modal"><div class="modal-box"><h3>ADMIN</h3><input type="text" id="adminUser" placeholder="User" style="width:100%; padding:10px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><input type="password" id="adminPass" placeholder="Pass" style="width:100%; padding:10px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><button onclick="checkLogin()" style="background:red; color:white; border:none; padding:10px; width:100%; cursor:pointer;">LOGIN</button></div></div>
+<div id="side-menu">
+    <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; color:red;">&times;</div>
+    <div class="menu-item" onclick="location.reload()">HOME</div>
+    <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: red;">LOGOUT</div>
+</div>
 
 <script>
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
     let currentVideo = { id: null, type: 'movie', s: 1, e: 1 };
     let logoClicks = 0;
 
-    // --- SCROLL SCRIPT (HUB MODE) ---
+    // Scroll Logic
     window.addEventListener('scroll', () => {
         const nav = document.getElementById('navbar');
-        if (window.scrollY > 40) {
-            nav.classList.add('scrolled');
-        } else {
-            nav.classList.remove('scrolled');
-        }
+        if (window.scrollY > 40) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
     });
 
-    // --- ABYSSAL VOID INTRO ENGINE ---
+    // Intro Engine
     const canvas = document.getElementById('abyss-canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -200,81 +153,71 @@
         setTimeout(() => {
             document.getElementById('intro').style.display = 'none';
             document.getElementById('home-page').style.display = 'block';
-            VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12, maxDistance: 22 });
+            VANTA.NET({ el: "#vanta-canvas", mouseControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12 });
         }, 1200);
         loadHome();
-        updateLogoutButton();
     }, 6500);
 
-    // --- MOVIE LOGIC ---
     async function loadHome() {
-        const pop = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`);
+        const pop = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi`);
         renderGrid('popular-india', (await pop.json()).results);
-        const trend = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&region=IN`);
+        const trend = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`);
         renderGrid('trending-india', (await trend.json()).results);
     }
 
     async function loadGenre(genreId, element) {
         if(element) { document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active')); element.classList.add('active'); }
-        let url = genreId ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc` : `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`;
-        const res = await fetch(url);
-        const data = await res.json();
-        document.getElementById('grid-title').innerText = genreId ? "CATEGORY RESULTS" : "LATEST POPULAR";
-        renderGrid('popular-india', data.results);
+        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}`);
+        renderGrid('popular-india', (await res.json()).results);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderGrid(id, items) {
         document.getElementById(id).innerHTML = items.filter(i => i.poster_path).map(i => `
             <div class="card" onclick="autoDetectType(${i.id}, '${i.media_type || 'movie'}')">
-                <div class="peek-info">${i.vote_average ? i.vote_average.toFixed(1) : '8.0'} ⭐</div>
+                <div class="peek-info">${i.vote_average.toFixed(1)} ⭐</div>
                 <img src="https://image.tmdb.org/t/p/w500${i.poster_path}">
                 <h3>${i.title || i.name}</h3>
             </div>
         `).join('');
     }
 
-    async function autoDetectType(id, type) { if (type === 'tv' || type === 'series') openSeriesSelector(id); else openPlayer(id, 'movie'); }
-    async function openSeriesSelector(id) {
-        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
-        const data = await res.json();
-        currentVideo = { id, type: 'tv', s: 1, e: 1 };
-        let html = `<h1 style="font-family:'Orbitron'; color:white;">${data.name}</h1><div class="ep-grid" style="display:grid; gap:10px; padding-top:20px;">`;
-        const sRes = await fetch(`https://api.themoviedb.org/3/tv/${id}/season/1?api_key=${API_KEY}`);
-        const sData = await sRes.json();
-        html += sData.episodes.map(ep => `<div style="padding:15px; background:#111; cursor:pointer;" onclick="playSeriesEp(${id}, 1, ${ep.episode_number})"><span style="color:red;">EP ${ep.episode_number}</span> ${ep.name}</div>`).join('');
-        document.getElementById('details-body').innerHTML = html + `</div>`;
-        document.getElementById('details-overlay').style.display = 'flex';
+    async function autoDetectType(id, type) {
+        if (type === 'tv') {
+            const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
+            const data = await res.json();
+            const sRes = await fetch(`https://api.themoviedb.org/3/tv/${id}/season/1?api_key=${API_KEY}`);
+            const sData = await sRes.json();
+            let html = `<h1 style="font-family:Orbitron; text-align:center;">${data.name}</h1><div class="ep-grid">`;
+            html += sData.episodes.map(ep => `<div class="ep-card" onclick="playSeriesEp(${id}, 1, ${ep.episode_number})"><span style="color:red">EP ${ep.episode_number}</span>: ${ep.name}</div>`).join('');
+            document.getElementById('details-body').innerHTML = html + `</div>`;
+            document.getElementById('details-overlay').style.display = 'flex';
+        } else openPlayer(id, 'movie');
     }
 
     function playSeriesEp(id, s, e) { currentVideo = { id, type: 'tv', s, e }; document.getElementById('details-overlay').style.display = 'none'; document.getElementById('player-ui').style.display = 'block'; changeServer(1); }
     function openPlayer(id, type) { currentVideo = { id, type, s:1, e:1 }; document.getElementById('player-ui').style.display = 'block'; changeServer(1); }
-    
-    function changeServer(num) { 
+    function changeServer(num) {
         window.open("https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce", "_blank");
-        const { id, type, s, e } = currentVideo; 
+        const { id, type, s, e } = currentVideo;
         const frame = document.getElementById('video-frame');
-        if(type === 'movie') frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb/${id}`; 
-        else frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
+        frame.src = type === 'movie' 
+            ? (num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb/${id}`)
+            : (num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`);
     }
 
     async function searchGlobal(query) {
         const s = document.getElementById('search-section'); const m = document.getElementById('main-content');
         if(query.trim().length < 2) { s.style.display = 'none'; m.style.display = 'block'; return; }
         const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-        const data = await res.json(); 
-        s.style.display = 'block'; m.style.display = 'none'; renderGrid('search-grid', data.results);
+        s.style.display = 'block'; m.style.display = 'none'; renderGrid('search-grid', (await res.json()).results);
     }
-    
+
     function clearSearch() { document.getElementById('searchInput').value = ''; document.getElementById('search-section').style.display = 'none'; document.getElementById('main-content').style.display = 'block'; }
     function closePlayer() { document.getElementById('player-ui').style.display = 'none'; document.getElementById('video-frame').src = ''; }
-    function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
-    function logoTrigger() { logoClicks++; if(logoClicks === 10) { document.getElementById('admin-modal').style.display='flex'; logoClicks = 0; } setTimeout(() => logoClicks = 0, 5000); }
-    function checkLogin() { if(document.getElementById('adminUser').value === 'sans' && document.getElementById('adminPass').value === '0510') { localStorage.setItem('isLogged', 'true'); updateLogoutButton(); alert('Granted'); document.getElementById('admin-modal').style.display='none'; } }
-    function adminLogout() { localStorage.removeItem('isLogged'); updateLogoutButton(); toggleMenu(); }
-    function updateLogoutButton() { const btn = document.getElementById('logout-item'); if(btn) btn.style.display = localStorage.getItem('isLogged') === 'true' ? 'flex' : 'none'; }
     function closeDetails() { document.getElementById('details-overlay').style.display = 'none'; }
-    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+    function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
+    function logoTrigger() { logoClicks++; if(logoClicks === 10) { alert('Admin Mode'); logoClicks = 0; } }
 </script>
 </body>
 </html>
