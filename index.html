@@ -14,11 +14,16 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Roboto:wght@300;400;700&family=Montserrat:wght@200;900&display=swap');
 
-        :root { --red: #ff0000; --neon-blue: #00d2ff; --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.1); }
+        :root { 
+            --red: #ff0000; 
+            --glass: rgba(255, 255, 255, 0.05); 
+            --glass-border: rgba(255, 255, 255, 0.1); 
+        }
+
         body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; }
 
-        /* --- 1. TERA ORIGINAL INTRO (UNTOUCHED) --- */
-        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; overflow: hidden; }
+        /* --- 1. TERA ORIGINAL INTRO --- */
+        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; overflow: hidden; top: 0; left: 0; }
         #intro.hide { opacity: 0; pointer-events: none; visibility: hidden; }
         .intro-bg-lights { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.18) 0%, transparent 60%); filter: blur(80px); animation: ambientPulse 4s infinite alternate; }
         @keyframes ambientPulse { 0% { transform: scale(1) translate(-5%, -5%); opacity: 0.5; } 100% { transform: scale(1.2) translate(5%, 5%); opacity: 0.8; } }
@@ -30,27 +35,35 @@
 
         /* --- 2. NAV & UI --- */
         nav { position: fixed; top: 0; width: 100%; height: 80px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; box-sizing: border-box; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); }
-        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 32px; background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; cursor: pointer; filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6)); animation: logoFloat 3s ease-in-out infinite alternate; }
-        @keyframes logoFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-2px); } }
+        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 32px; background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; cursor: pointer; filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6)); }
+        
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .search-wrapper input { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 10px 20px; border-radius: 8px; color: #fff; outline: none; width: 140px; transition: 0.4s; }
+        .search-wrapper input:focus { width: 220px; border-color: var(--red); }
 
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
         #home-page { display: none; position: relative; z-index: 10; padding-top: 120px; }
-        
-        /* --- 3. TERA NEON TEXTURE CARDS --- */
+
+        /* --- 3. NEON TEXTURE CARDS --- */
         .container { padding: 0 5% 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 40px; }
         .card { position: relative; border-radius: 20px; overflow: hidden; background: #000; cursor: pointer; padding: 2px; transition: 0.5s; height: 350px; }
         .card:hover { transform: scale(1.05); }
         .card::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent, #ff0000, #00d2ff, #7a00ff, #ff0000); animation: rotateBorder 4s linear infinite; z-index: -2; }
         .card::after { content: ""; position: absolute; inset: 4px; background: #000; border-radius: 17px; z-index: -1; }
         @keyframes rotateBorder { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .card img { width: 100%; height: 280px; object-fit: cover; border-radius: 17px 17px 0 0; }
-        .card h3 { font-size: 13px; font-family: 'Montserrat'; padding: 12px; text-align: center; margin: 0; background: #000; height: 60px; display: flex; align-items: center; justify-content: center; }
+        .card img { width: 100%; height: 280px; object-fit: cover; border-radius: 17px 17px 0 0; position: relative; z-index: 2; }
+        .card h3 { position: relative; z-index: 2; font-size: 13px; font-family: 'Montserrat'; font-weight: 700; padding: 12px; text-align: center; margin: 0; background: #000; height: 60px; display: flex; align-items: center; justify-content: center; }
 
-        /* Menus & Modals */
-        #side-menu { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.5s; padding: 100px 40px; border-left: 1px solid var(--glass-border); }
+        /* --- 4. SIDE MENU (FIXED) --- */
+        #side-menu { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); padding: 100px 40px; box-sizing: border-box; border-left: 1px solid var(--glass-border); }
         #side-menu.active { right: 0; }
+        .menu-item { padding: 20px 0; font-size: 14px; font-family: 'Montserrat'; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; color: #777; transition: 0.3s; }
+        .menu-item:hover { color: #fff; padding-left: 10px; border-bottom-color: var(--red); }
+
+        /* --- 5. MODALS & PLAYER --- */
         #player-ui { position: fixed; inset: 0; background: #000; display: none; z-index: 25000; }
         #login-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98); display: none; justify-content: center; align-items: center; z-index: 20000; }
+        .modal-box { background: #0a0a0a; padding: 40px; border-radius: 25px; border: 1px solid var(--red); text-align: center; width: 320px; }
     </style>
 </head>
 <body>
@@ -68,9 +81,11 @@
 <div id="home-page">
     <nav>
         <div class="logo-nav" id="adminTrigger">INDIPLEX</div>
-        <div style="display:flex; align-items:center; gap:20px;">
-            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchMovies()" style="background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); padding:8px; border-radius:8px; color:white;">
-            <div onclick="toggleMenu()" style="cursor:pointer; color:white;"><i class="fa-solid fa-bars-staggered"></i></div>
+        <div class="nav-right">
+            <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search movies..." onkeyup="searchGlobal()">
+            </div>
+            <div onclick="toggleMenu()" style="cursor:pointer; color:white; font-size:24px;"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
     <div class="container" id="main-grid"></div>
@@ -78,16 +93,18 @@
 
 <div id="side-menu">
     <div onclick="toggleMenu()" style="position:absolute; top:30px; right:30px; font-size:30px; cursor:pointer;">&times;</div>
-    <div onclick="location.reload()" style="padding:20px 0; cursor:pointer; color:#777;">HOME</div>
-    <div onclick="logoutAdmin()" style="padding:20px 0; cursor:pointer; color:#777;">LOGOUT ADMIN</div>
+    <div class="menu-item" onclick="location.reload()">HOME</div>
+    <div class="menu-item" onclick="alert('IndiPlex Global v2.0')">ABOUT</div>
+    <div class="menu-item" onclick="logoutAdmin()">ADMIN LOGOUT</div>
 </div>
 
 <div id="login-modal">
-    <div style="background:#0a0a0a; padding:40px; border-radius:25px; border:1px solid var(--red); text-align:center;">
+    <div class="modal-box">
         <h2 style="color:var(--red); font-family:'Orbitron';">ADMIN</h2>
-        <input type="text" id="admin-user" placeholder="ID" style="width:100%; padding:10px; margin:10px 0; background:#111; color:white;">
-        <input type="password" id="admin-pass" placeholder="KEY" style="width:100%; padding:10px; margin:10px 0; background:#111; color:white;">
-        <button onclick="checkLogin()" style="width:100%; padding:10px; background:var(--red); color:white; border:none; cursor:pointer;">ACCESS</button>
+        <input type="text" id="admin-user" placeholder="ID" style="width:100%; padding:12px; margin:10px 0; background:#111; color:white; border:1px solid #333;">
+        <input type="password" id="admin-pass" placeholder="KEY" style="width:100%; padding:12px; margin:10px 0; background:#111; color:white; border:1px solid #333;">
+        <button onclick="checkLogin()" style="width:100%; padding:12px; background:var(--red); color:white; border:none; cursor:pointer; font-weight:900;">ACCESS</button>
+        <p onclick="document.getElementById('login-modal').style.display='none'" style="margin-top:10px; cursor:pointer; font-size:12px; color:#555;">Close</p>
     </div>
 </div>
 
@@ -101,28 +118,48 @@
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
     let database = [];
 
-    // --- INTRO TIMING (6 SECONDS AS PER ORIGINAL) ---
+    // --- 1. INTRO & VANTA TIMER ---
     setTimeout(() => { 
         document.getElementById('intro').classList.add('hide'); 
         document.getElementById('home-page').style.display = 'block';
         try {
             VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12 });
         } catch(e){}
-        loadAutoMovies(); 
+        loadMovies(); 
     }, 6000);
 
-    async function loadAutoMovies() {
+    // --- 2. LOAD INDIAN & TRENDING MOVIES ---
+    async function loadMovies() {
         try {
-            const response = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}`);
-            const data = await response.json();
+            // Indian Mix (Bollywood + South)
+            const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=IN&with_original_language=hi|te|ta|ml|kn&sort_by=popularity.desc`);
+            const data = await res.json();
             database = data.results.map(item => ({
                 title: item.title || item.name,
                 poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
                 id: item.id,
-                type: item.media_type
+                type: 'movie'
             }));
             displayContent(database);
         } catch (e) { console.log("API Error"); }
+    }
+
+    // --- 3. SEARCH DUNIYA BHAR KI MOVIES ---
+    async function searchGlobal() {
+        let term = document.getElementById('searchInput').value;
+        if(term.length < 3) { if(term.length === 0) displayContent(database); return; }
+
+        try {
+            const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${term}`);
+            const data = await res.json();
+            const results = data.results.filter(i => i.poster_path).map(item => ({
+                title: item.title || item.name,
+                poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                id: item.id,
+                type: item.media_type || 'movie'
+            }));
+            displayContent(results);
+        } catch (e) {}
     }
 
     function displayContent(items) {
@@ -132,36 +169,36 @@
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `<img src="${item.poster}"><h3>${item.title}</h3>`;
-            card.onclick = () => {
-                const url = item.type === 'tv' 
-                    ? `https://vidsrc.me/embed/tv?tmdb=${item.id}&season=1&episode=1` 
-                    : `https://vidsrc.me/embed/movie?tmdb=${item.id}`;
-                document.getElementById('video-frame').src = url; 
-                document.getElementById('player-ui').style.display = 'block'; 
-            };
+            card.onclick = () => playMovie(item);
             grid.appendChild(card);
         });
     }
 
-    // Admin & UI Functions
+    function playMovie(item) {
+        const url = item.type === 'tv' 
+            ? `https://vidsrc.me/embed/tv?tmdb=${item.id}&season=1&episode=1` 
+            : `https://vidsrc.me/embed/movie?tmdb=${item.id}`;
+        document.getElementById('video-frame').src = url; 
+        document.getElementById('player-ui').style.display = 'block'; 
+    }
+
+    // --- 4. ADMIN PANEL (sans/0510) ---
     document.getElementById('adminTrigger').addEventListener('click', () => {
         clicks++;
         if(clicks === 5) document.getElementById('login-modal').style.display = 'flex';
         setTimeout(() => clicks = 0, 5000);
     });
+
     function checkLogin() {
         if(document.getElementById('admin-user').value === "sans" && document.getElementById('admin-pass').value === "0510") {
+            alert("Admin Access Granted");
             document.getElementById('login-modal').style.display = 'none';
-            alert("Admin In");
-        } else alert("Denied");
+        } else alert("Access Denied");
     }
-    function logoutAdmin() { location.reload(); }
+
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
     function closePlayer() { document.getElementById('player-ui').style.display = 'none'; document.getElementById('video-frame').src = ''; }
-    function searchMovies() {
-        let term = document.getElementById('searchInput').value.toLowerCase();
-        displayContent(database.filter(m => m.title.toLowerCase().includes(term)));
-    }
+    function logoutAdmin() { location.reload(); }
 </script>
 </body>
 </html>
