@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INDIPLEX | Aesthetic Cinema</title>
     
+    <script src="https://pl28716477.effectivegatecpm.com/08/29/b7/0829b70499d7f6dcbbc947340a47ca65.js"></script>
     <script src="https://pl28703128.effectivegatecpm.com/ff/63/3e/ff633ed807491685eb8ea72ff91c6441.js"></script>
     <script src="https://pl28703227.effectivegatecpm.com/e0/da/81/e0da8134581e4f8447faee3f94c03c5c.js"></script>
     
@@ -26,7 +27,7 @@
             font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; 
         }
 
-        /* --- ABYSSAL VOID INTRO (MAX LEVEL) --- */
+        /* --- ABYSSAL VOID INTRO (RESTORED EXACTLY) --- */
         #intro { 
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
             background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -125,7 +126,21 @@
         }
         .card:hover .peek-info { opacity: 1; }
 
-        /* --- SIDEBAR & MENU --- */
+        /* --- SERIES ENGINE STYLES (NEW) --- */
+        .season-tabs { display: flex; gap: 10px; overflow-x: auto; margin: 20px 0; padding-bottom: 10px; }
+        .season-btn { 
+            background: #111; border: 1px solid #333; color: #888; padding: 10px 20px; 
+            border-radius: 5px; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; white-space: nowrap;
+        }
+        .season-btn.active { background: var(--red); color: white; border-color: var(--red); }
+        .ep-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .ep-card { 
+            background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; 
+            cursor: pointer; transition: 0.3s; border: 1px solid transparent; display: flex; align-items: center; gap: 15px;
+        }
+        .ep-card:hover { background: rgba(255,0,0,0.1); border-color: var(--red); }
+
+        /* --- MODALS & OVERLAYS --- */
         #side-menu { 
             position: fixed; top: 0; right: -320px; width: 310px; height: 100%; 
             background: rgba(8,8,8,0.98); backdrop-filter: blur(40px); z-index: 6000; 
@@ -138,8 +153,8 @@
             font-family: 'Montserrat'; font-size: 13px; display: flex; align-items: center; gap: 12px; transition: 0.3s;
         }
         .menu-item:hover { color: #fff; background: rgba(255,0,0,0.1); padding-left: 30px; }
+        .smart-link-btn { margin-top: 30px; display: block; background: rgba(255,0,0,0.2); border: 1px dashed red; color: red; padding: 15px; border-radius: 10px; text-align: center; text-decoration: none; font-family: 'Orbitron'; font-size: 10px; }
 
-        /* --- PLAYER & DETAILS OVERLAY --- */
         #details-overlay { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(30px); 
             display: none; z-index: 8000; overflow-y: auto; padding: 80px 5%; 
@@ -152,8 +167,6 @@
             font-family: 'Orbitron'; transition: 0.3s;
         }
         .server-btn:hover { background: var(--red); box-shadow: 0 0 20px var(--red); }
-
-        /* --- MODALS --- */
         #admin-modal, #about-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 20000; align-items: center; justify-content: center; }
         .modal-box { background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; }
     </style>
@@ -190,13 +203,13 @@
         </div>
 
         <div id="main-content">
-            <h2 class="section-title">LATEST POPULAR</h2>
+            <h2 class="section-title">LATEST MOVIES</h2>
             <div class="container" id="popular-india"></div>
             
             <h2 class="section-title">PREMIUM SERIES</h2>
-            <div class="container" id="custom-grid"></div>
+            <div class="container" id="series-grid"></div>
             
-            <h2 class="section-title">TRENDING IN INDIA</h2>
+            <h2 class="section-title">TRENDING</h2>
             <div class="container" id="trending-india"></div>
         </div>
     </div>
@@ -206,187 +219,166 @@
     <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; margin-bottom:30px; color:red;">&times;</div>
     <div class="menu-item" onclick="location.reload()"><i class="fa-solid fa-house"></i> HOME</div>
     <div class="menu-item" onclick="openAbout()"><i class="fa-solid fa-circle-info"></i> ABOUT VISION</div>
+    <a href="https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce" target="_blank" class="smart-link-btn"><i class="fa-solid fa-crown"></i> UNLOCK PREMIUM</a>
     <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: red;"><i class="fa-solid fa-power-off"></i> LOGOUT ADMIN</div>
 </div>
 
-<div id="about-modal"><div class="modal-box"><h2 style="color:red; font-family:'Orbitron';">VISION</h2><p style="color:#777; line-height:1.6;">Privacy first, Cinema next. No ads. High speed servers. Crafted by Y07.</p><button onclick="closeAbout()" style="background:red; color:white; border:none; padding:12px 30px; border-radius:5px; cursor:pointer; font-family:'Orbitron';">CLOSE</button></div></div>
-<div id="admin-modal"><div class="modal-box"><h3 style="color:red; font-family:'Orbitron';">ADMIN ACCESS</h3><input type="text" id="adminUser" placeholder="Username" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><input type="password" id="adminPass" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><button onclick="checkLogin()" style="background:red; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-family:'Orbitron';">LOGIN</button></div></div>
-<div id="details-overlay"><div onclick="closeDetails()" style="position:fixed; top:25px; right:35px; font-size:45px; cursor:pointer; color:red; z-index:9000;">&times;</div><div id="details-body"></div></div>
-<div id="player-ui"><div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div><iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe><div class="server-container"><button class="server-btn" onclick="changeServer(1)">SERVER 1</button><button class="server-btn" onclick="changeServer(2)">SERVER 2</button></div></div>
+<div id="about-modal"><div class="modal-box"><h2 style="color:red; font-family:'Orbitron';">VISION</h2><p style="color:#777; line-height:1.6;">Privacy first, Cinema next. Crafted by Y07.</p><button onclick="closeAbout()" style="background:red; color:white; border:none; padding:12px 30px; border-radius:5px; cursor:pointer; font-family:'Orbitron';">CLOSE</button></div></div>
+<div id="admin-modal"><div class="modal-box"><h3 style="color:red; font-family:'Orbitron';">ADMIN ACCESS</h3><input type="text" id="adminUser" placeholder="Username" class="admin-input" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><input type="password" id="adminPass" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><button onclick="checkLogin()" style="background:red; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-family:'Orbitron';">LOGIN</button></div></div>
+
+<div id="details-overlay">
+    <div onclick="closeDetails()" style="position:fixed; top:25px; right:35px; font-size:45px; cursor:pointer; color:red; z-index:9000;">&times;</div>
+    <div id="details-body"></div>
+</div>
+
+<div id="player-ui">
+    <div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div>
+    <iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+    <div class="server-container">
+        <button class="server-btn" onclick="changeServer(1)">SERVER 1</button>
+        <button class="server-btn" onclick="changeServer(2)">SERVER 2</button>
+    </div>
+</div>
 
 <script>
-    // --- DATABASE (RESTORED FULL) ---
-    const mirzapurData = {
-        title: "Mirzapur", poster: "https://image.tmdb.org/t/p/w500/6By7m99Y6Y1uK6CqRz3PzX7FzS.jpg",
-        seasons: [{ name: "Season 1", episodes: [{ title: "Episode 1", link: "https://vidsrc.me/embed/tv/tt7197008/1/1" }] }]
-    };
-    const moneyHeistData = {
-        title: "Money Heist", poster: "https://image.tmdb.org/t/p/w500/reEMJA1uzpG3XZ7jSbs67STdfpM.jpg",
-        seasons: [{ name: "Season 1", episodes: [{ title: "Episode 1", link: "https://vidsrc.me/embed/tv/tt6468322/1/1" }] }]
-    };
-    const customDatabase = [mirzapurData, moneyHeistData];
-
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
-    let currentVideo = { id: null, type: 'movie' };
+    let currentMedia = { id: null, type: 'movie', s: 1, e: 1 };
     let logoClicks = 0;
 
-    // --- ABYSSAL VOID ENGINE (MAX DETAIL) ---
+    // --- ABYSSAL VOID CANVAS (RESTORED) ---
     const canvas = document.getElementById('abyss-canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     let particles = [];
     class Particle {
         constructor() { this.reset(); }
-        reset() { 
-            this.x = Math.random() * canvas.width; 
-            this.y = Math.random() * canvas.height; 
-            this.z = Math.random() * canvas.width; 
-            this.speedZ = -2.5; 
-        }
-        update() { 
-            this.z += this.speedZ; if (this.z <= 0) { this.reset(); this.z = canvas.width; }
-            this.posX = (this.x - canvas.width / 2) * (canvas.width / this.z) + canvas.width / 2;
-            this.posY = (this.y - canvas.height / 2) * (canvas.width / this.z) + canvas.height / 2;
-            this.currentSize = (1 - this.z / canvas.width) * 4; 
-            this.opacity = (1 - this.z / canvas.width); 
-        }
-        draw() { 
-            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; 
-            ctx.beginPath(); ctx.arc(this.posX, this.posY, this.currentSize, 0, Math.PI * 2); 
-            ctx.fill(); 
-        }
+        reset() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.z = Math.random() * canvas.width; this.speedZ = -2.5; }
+        update() { this.z += this.speedZ; if (this.z <= 0) { this.reset(); this.z = canvas.width; } this.posX = (this.x - canvas.width / 2) * (canvas.width / this.z) + canvas.width / 2; this.posY = (this.y - canvas.height / 2) * (canvas.width / this.z) + canvas.height / 2; this.currentSize = (1 - this.z / canvas.width) * 4; this.opacity = (1 - this.z / canvas.width); }
+        draw() { ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; ctx.beginPath(); ctx.arc(this.posX, this.posY, this.currentSize, 0, Math.PI * 2); ctx.fill(); }
     }
     function initAbyss() { for (let i = 0; i < 250; i++) particles.push(new Particle()); animateAbyss(); }
-    function animateAbyss() { 
-        ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); 
-        particles.forEach(p => { p.update(); p.draw(); }); 
-        requestAnimationFrame(animateAbyss); 
-    }
+    function animateAbyss() { ctx.fillStyle = 'black'; ctx.fillRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateAbyss); }
     initAbyss();
 
-    // --- TRANSITION LOGIC ---
+    // --- BOOT SEQUENCE ---
     setTimeout(() => {
         document.getElementById('intro').style.opacity = '0';
         setTimeout(() => {
             document.getElementById('intro').style.display = 'none';
             document.getElementById('home-page').style.display = 'block';
             VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12, maxDistance: 22 });
+            loadContent();
         }, 1200);
-        loadHome();
-        updateLogoutButton();
     }, 6500);
 
-    // --- MOVIE LOADING LOGIC ---
-    async function loadHome() {
-        // Popular
+    // --- CONTENT ENGINE ---
+    async function loadContent() {
         const pop = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`);
-        const pData = await pop.json(); renderGrid('popular-india', pData.results);
-        
-        // Premium Custom
-        const customGrid = document.getElementById('custom-grid');
-        customGrid.innerHTML = customDatabase.map(item => `
-            <div class="card" onclick='openDetails(${JSON.stringify(item)})'>
-                <div class="peek-info">PREMIUM • 4K</div>
-                <img src="${item.poster}">
-                <h3>${item.title}</h3>
-            </div>
-        `).join('');
+        renderGrid('popular-india', (await pop.json()).results);
 
-        // Trending
+        const series = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&with_original_language=hi`);
+        renderGrid('series-grid', (await series.json()).results, 'tv');
+
         const trend = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&region=IN`);
-        const tData = await trend.json(); renderGrid('trending-india', tData.results);
+        renderGrid('trending-india', (await trend.json()).results);
     }
 
-    function renderGrid(id, items) {
-        document.getElementById(id).innerHTML = items.filter(i => i.poster_path).map(i => `
-            <div class="card" onclick="openPlayer(${i.id}, '${i.media_type || 'movie'}')">
-                <div class="peek-info">${i.vote_average ? i.vote_average.toFixed(1) : '8.0'} ⭐</div>
-                <img src="https://image.tmdb.org/t/p/w500${i.poster_path}">
-                <h3>${i.title || i.name}</h3>
+    function renderGrid(id, items, forcedType = null) {
+        document.getElementById(id).innerHTML = items.filter(i => i.poster_path).map(i => {
+            const type = forcedType || i.media_type || (i.title ? 'movie' : 'tv');
+            return `
+                <div class="card" onclick="handleSelect(${i.id}, '${type}')">
+                    <div class="peek-info">8.5 ⭐</div>
+                    <img src="https://image.tmdb.org/t/p/w500${i.poster_path}">
+                    <h3>${i.title || i.name}</h3>
+                </div>
+            `;
+        }).join('');
+    }
+
+    async function handleSelect(id, type) {
+        if(type === 'movie') {
+            currentMedia = { id, type, s: 0, e: 0 };
+            openPlayer();
+        } else {
+            const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
+            const data = await res.json();
+            renderSeriesDetails(data);
+        }
+    }
+
+    // --- UPDATED SERIES UI (FIXED SEASON/EPISODE ISSUE) ---
+    function renderSeriesDetails(data) {
+        currentMedia.id = data.id; currentMedia.type = 'tv';
+        let html = `<h1 style="font-family:'Orbitron'; font-size:35px; color:white;">${data.name}</h1>
+                    <p style="color:#aaa; margin:15px 0;">${data.overview}</p>
+                    <div class="season-tabs">`;
+        
+        data.seasons.filter(s => s.season_number > 0).forEach((s, index) => {
+            html += `<div class="season-btn ${index===0?'active':''}" id="sbtn-${s.season_number}" onclick="fetchSeason(${data.id}, ${s.season_number})">SEASON ${s.season_number}</div>`;
+        });
+        html += `</div><div id="ep-container" class="ep-list"></div>`;
+        
+        document.getElementById('details-body').innerHTML = html;
+        document.getElementById('details-overlay').style.display = 'block';
+        fetchSeason(data.id, 1);
+    }
+
+    async function fetchSeason(id, sNum) {
+        currentMedia.s = sNum;
+        document.querySelectorAll('.season-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`sbtn-${sNum}`).classList.add('active');
+        
+        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}/season/${sNum}?api_key=${API_KEY}`);
+        const data = await res.json();
+        
+        document.getElementById('ep-container').innerHTML = data.episodes.map(e => `
+            <div class="ep-card" onclick="playEpisode(${e.episode_number})">
+                <div style="background:red; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-play" style="font-size:12px;"></i></div>
+                <div><b>Episode ${e.episode_number}</b><br><small style="color:#777;">${e.name}</small></div>
             </div>
         `).join('');
     }
 
-    // --- FUNCTIONALITIES (ADMIN, SEARCH, PLAYER) ---
-    async function searchGlobal(query) {
-        const s = document.getElementById('search-section'); const m = document.getElementById('main-content');
-        if(query.trim().length < 2) { s.style.display = 'none'; m.style.display = 'block'; return; }
-        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-        const data = await res.json(); 
-        s.style.display = 'block'; m.style.display = 'none'; 
-        renderGrid('search-grid', data.results);
-    }
-    
-    function clearSearch() { 
-        document.getElementById('searchInput').value = ''; 
-        document.getElementById('search-section').style.display = 'none'; 
-        document.getElementById('main-content').style.display = 'block'; 
+    function playEpisode(eNum) { currentMedia.e = eNum; openPlayer(); }
+
+    function openPlayer() {
+        const { id, type, s, e } = currentMedia;
+        document.getElementById('player-ui').style.display = 'block';
+        changeServer(1);
     }
 
-    function openPlayer(id, type) { 
-        currentVideo = { id, type }; 
-        document.getElementById('player-ui').style.display = 'block'; 
-        changeServer(1); 
-    }
-
-    function changeServer(num) { 
-        const { id, type } = currentVideo; 
+    function changeServer(n) {
+        const { id, type, s, e } = currentMedia;
         const frame = document.getElementById('video-frame');
-        frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/${type}/${id}` : `https://embed.smashystream.com/playere.php?tmdb=${id}`; 
+        if(n === 1) {
+            frame.src = type === 'movie' ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}`;
+        } else {
+            frame.src = type === 'movie' ? `https://vidsrc.xyz/embed/movie/${id}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
+        }
     }
 
+    // --- UTILS & ADMIN (RESTORED) ---
     function closePlayer() { document.getElementById('player-ui').style.display = 'none'; document.getElementById('video-frame').src = ''; }
-    
-    function openDetails(item) {
-        let seasons = '';
-        item.seasons.forEach(s => {
-            seasons += `<h2 style="color:red; margin-top:30px; font-family:'Orbitron';">${s.name}</h2>`;
-            s.episodes.forEach(ep => {
-                seasons += `<div style="padding:18px; background:rgba(255,255,255,0.05); margin:10px 0; border-radius:12px; cursor:pointer; font-family:'Montserrat'; transition:0.3s;" onmouseover="this.style.background='rgba(255,0,0,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'" onclick="playStream('${ep.link}')">${ep.title}</div>`;
-            });
-        });
-        document.getElementById('details-body').innerHTML = `<h1 style="font-family:'Orbitron'; font-size:40px;">${item.title}</h1>` + seasons;
-        document.getElementById('details-overlay').style.display = 'block';
-    }
-
-    function playStream(link) { 
-        document.getElementById('details-overlay').style.display = 'none'; 
-        document.getElementById('video-frame').src = link; 
-        document.getElementById('player-ui').style.display = 'block'; 
-    }
-
+    function closeDetails() { document.getElementById('details-overlay').style.display = 'none'; }
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
     function openAbout() { document.getElementById('about-modal').style.display = 'flex'; }
     function closeAbout() { document.getElementById('about-modal').style.display = 'none'; }
-    function openAdmin() { document.getElementById('admin-modal').style.display = 'flex'; }
-    function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
-    function closeDetails() { document.getElementById('details-overlay').style.display = 'none'; }
+    function logoTrigger() { logoClicks++; if(logoClicks === 10) { document.getElementById('admin-modal').style.display='flex'; logoClicks = 0; } setTimeout(() => logoClicks = 0, 5000); }
+    function checkLogin() { if(document.getElementById('adminUser').value === 'sans' && document.getElementById('adminPass').value === '0510') { localStorage.setItem('isLogged', 'true'); location.reload(); } else { alert('Unauthorized'); } }
+    function adminLogout() { localStorage.removeItem('isLogged'); location.reload(); }
+    if(localStorage.getItem('isLogged') === 'true') document.getElementById('logout-item').style.display = 'flex';
+
+    async function searchGlobal(q) {
+        if(q.length < 2) { clearSearch(); return; }
+        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
+        document.getElementById('search-section').style.display = 'block';
+        document.getElementById('main-content').style.display = 'none';
+        renderGrid('search-grid', (await res.json()).results);
+    }
+    function clearSearch() { document.getElementById('searchInput').value = ''; document.getElementById('search-section').style.display = 'none'; document.getElementById('main-content').style.display = 'block'; }
     
-    function logoTrigger() { 
-        logoClicks++; 
-        if(logoClicks === 10) { openAdmin(); logoClicks = 0; } 
-        setTimeout(() => logoClicks = 0, 5000); 
-    }
-
-    function checkLogin() { 
-        if(document.getElementById('adminUser').value === 'sans' && document.getElementById('adminPass').value === '0510') { 
-            localStorage.setItem('isLogged', 'true'); 
-            updateLogoutButton(); 
-            alert('Access Granted'); closeAdmin(); 
-        } else { alert('Unauthorized'); } 
-    }
-
-    function adminLogout() { localStorage.removeItem('isLogged'); updateLogoutButton(); alert('Logged Out'); toggleMenu(); }
-    
-    function updateLogoutButton() { 
-        const btn = document.getElementById('logout-item'); 
-        if(btn) btn.style.display = localStorage.getItem('isLogged') === 'true' ? 'flex' : 'none'; 
-    }
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    });
+    window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 </script>
 </body>
 </html>
