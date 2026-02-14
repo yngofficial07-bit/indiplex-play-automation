@@ -11,191 +11,159 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Montserrat:wght@200;900&display=swap');
-        :root { --red: #ff0000; --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.1); }
-        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; }
+        :root { --red: #ff0000; --glass-border: rgba(255, 255, 255, 0.1); }
+        body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; }
 
         /* --- INTRO --- */
         #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; top: 0; left: 0; }
         #intro.hide { opacity: 0; pointer-events: none; visibility: hidden; }
-        .intro-bg-lights { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.18) 0%, transparent 60%); filter: blur(80px); animation: ambientPulse 4s infinite alternate; }
-        .premium-name { font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; color: #fff; letter-spacing: 12px; text-align: center; animation: luxuryGlow 3s ease-in-out forwards; }
-        @keyframes luxuryGlow { 0% { opacity: 0; letter-spacing: 20px; } 100% { letter-spacing: 10px; color: var(--red); } }
+        .premium-name { font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; color: var(--red); letter-spacing: 12px; }
 
-        /* --- FIXED NAVBAR --- */
-        nav { position: fixed; top: 0; width: 100%; height: 80px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 4%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); box-sizing: border-box; }
-        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(18px, 5vw, 28px); background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; flex-shrink: 0; }
+        /* --- NAVBAR FIX --- */
+        nav { position: fixed; top: 0; width: 100%; height: 75px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 4%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border); box-sizing: border-box; }
+        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 24px; color: var(--red); cursor: pointer; flex-shrink: 0; }
+        .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 1; }
+        #searchInput { background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: white; padding: 8px 12px; border-radius: 20px; outline: none; width: 130px; font-size: 13px; }
         
-        .nav-right { display: flex; align-items: center; gap: 15px; flex-grow: 1; justify-content: flex-end; }
-        .search-wrapper { position: relative; max-width: 200px; width: 100%; }
-        .search-wrapper input { width: 100%; background: rgba(255,255,255,0.1); border: 1px solid var(--glass-border); color: white; padding: 8px 15px; border-radius: 20px; outline: none; font-size: 14px; }
-        
-        .menu-icon { font-size: 22px; cursor: pointer; color: white; flex-shrink: 0; padding-left: 10px; }
-
         /* --- SIDE MENU --- */
-        #side-menu { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.4s ease; padding: 100px 40px; border-left: 1px solid var(--glass-border); box-sizing: border-box; }
+        #side-menu { position: fixed; top: 0; right: -310px; width: 300px; height: 100%; background: #0a0a0a; z-index: 6000; transition: 0.4s; padding: 80px 30px; border-left: 1px solid var(--glass-border); }
         #side-menu.active { right: 0; }
-        .menu-item { padding: 15px 0; color: #aaa; cursor: pointer; font-family: 'Montserrat'; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .menu-item:hover { color: var(--red); }
 
-        #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
-        #home-page { display: none; position: relative; z-index: 10; padding-top: 110px; }
+        #home-page { display: none; padding-top: 100px; position: relative; z-index: 10; }
+        h2.section-title { padding-left: 5%; font-family: 'Orbitron'; font-size: 18px; color: var(--red); margin: 30px 0 15px; }
 
-        /* --- CARDS --- */
-        .container { padding: 0 5% 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 25px; }
-        .card { position: relative; border-radius: 15px; overflow: hidden; background: #000; cursor: pointer; padding: 2px; transition: 0.4s; height: 300px; }
-        .card:hover { transform: translateY(-10px); }
-        .card::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent, #ff0000, #00d2ff, #ff0000); animation: rotate 4s linear infinite; z-index: -1; }
-        .card::after { content: ""; position: absolute; inset: 3px; background: #000; border-radius: 13px; z-index: -1; }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-        .card img { width: 100%; height: 240px; object-fit: cover; border-radius: 13px 13px 0 0; }
-        .card h3 { font-size: 12px; padding: 10px; text-align: center; margin: 0; height: 50px; display: flex; align-items: center; justify-content: center; }
+        /* --- CARDS GRID --- */
+        .container { padding: 0 5% 30px; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+        .card { position: relative; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; border: 2px solid #111; transition: 0.3s; height: 260px; }
+        .card:hover { border-color: var(--red); transform: scale(1.03); }
+        .card img { width: 100%; height: 210px; object-fit: cover; }
+        .card h3 { font-size: 11px; padding: 5px; text-align: center; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
         /* --- PLAYER --- */
         #player-ui { position: fixed; inset: 0; background: #000; display: none; z-index: 25000; }
-        .server-tabs { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; width: 90%; }
-        .server-btn { background: #222; color: white; border: 1px solid #444; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-size: 11px; font-family: 'Orbitron'; transition: 0.3s; }
-        .server-btn.active { background: var(--red); border-color: var(--red); }
-
-        #login-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 30000; }
+        .server-tabs { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 25001; }
+        .server-btn { background: #1a1a1a; color: white; border: 1px solid #333; padding: 8px 12px; border-radius: 4px; font-size: 10px; cursor: pointer; }
+        .server-btn.active { background: var(--red); }
     </style>
 </head>
 <body>
 
-<div id="intro">
-    <div class="intro-bg-lights"></div>
-    <h1 class="premium-name">INDIPLEX</h1>
-</div>
-
-<div id="vanta-canvas"></div>
+<div id="intro"><h1 class="premium-name">INDIPLEX</h1></div>
+<div id="vanta-canvas" style="position:fixed; inset:0; z-index:1;"></div>
 
 <div id="home-page">
     <nav>
         <div class="logo-nav" id="adminTrigger">INDIPLEX</div>
         <div class="nav-right">
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" onkeyup="searchGlobal()" placeholder="Search...">
-            </div>
-            <div class="menu-icon" onclick="toggleMenu()"><i class="fa-solid fa-bars-staggered"></i></div>
+            <input type="text" id="searchInput" onkeyup="searchGlobal()" placeholder="Search...">
+            <div onclick="toggleMenu()" style="cursor:pointer; font-size:22px;"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
-    <div class="container" id="main-grid"></div>
+    
+    <h2 class="section-title">INDIAN TRENDING</h2>
+    <div class="container" id="indian-grid"></div>
+
+    <h2 class="section-title">GLOBAL TOP HITS</h2>
+    <div class="container" id="global-grid"></div>
 </div>
 
 <div id="side-menu">
-    <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer;">&times;</div>
-    <div class="menu-item" onclick="location.reload()">HOME</div>
-    <div class="menu-item" onclick="document.getElementById('login-modal').style.display='flex'">ADMIN LOGIN</div>
+    <div onclick="toggleMenu()" style="text-align:right; font-size:25px; cursor:pointer;">&times;</div>
+    <div style="margin-top:20px;">
+        <p onclick="location.reload()" style="cursor:pointer;">HOME</p>
+        <p onclick="alert('Admin: sans/0510')" style="cursor:pointer; color:#444;">INFO</p>
+    </div>
 </div>
 
 <div id="player-ui">
-    <div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); border-radius:50%; width:45px; height:45px; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-arrow-left"></i></div>
+    <div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30000;"><i class="fa-solid fa-arrow-left"></i></div>
     <iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
-    <div class="server-tabs">
-        <button class="server-btn" onclick="setServer(1, this)">SERVER 1 (Vidsrc.pro)</button>
-        <button class="server-btn" onclick="setServer(2, this)">SERVER 2 (Vidsrc.cc)</button>
-        <button class="server-btn" onclick="setServer(3, this)">SERVER 3 (Smashy)</button>
-        <button class="server-btn" onclick="setServer(4, this)">SERVER 4 (SuperEmbed)</button>
-    </div>
-</div>
-
-<div id="login-modal">
-    <div style="background:#111; padding:30px; border:1px solid var(--red); border-radius:15px; width:280px; text-align:center;">
-        <h3 style="color:var(--red); font-family:'Orbitron';">ADMIN</h3>
-        <input type="text" id="admin-user" placeholder="ID" style="width:100%; margin:10px 0; padding:10px; background:#222; border:none; color:white;">
-        <input type="password" id="admin-pass" placeholder="KEY" style="width:100%; margin:10px 0; padding:10px; background:#222; border:none; color:white;">
-        <button onclick="checkLogin()" style="width:100%; padding:10px; background:var(--red); border:none; color:white; cursor:pointer;">ACCESS</button>
-        <p onclick="document.getElementById('login-modal').style.display='none'" style="font-size:12px; margin-top:15px; color:#555; cursor:pointer;">CLOSE</p>
-    </div>
+    <div class="server-tabs" id="serverTabs"></div>
 </div>
 
 <script>
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
-    let database = [];
     let currentItem = null;
-    let adminClicks = 0;
 
-    // --- TIMING ---
     setTimeout(() => {
         document.getElementById('intro').classList.add('hide');
         document.getElementById('home-page').style.display = 'block';
         VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 10 });
-        loadMovies();
-    }, 5500);
+        fetchContent();
+    }, 5000);
 
-    async function loadMovies() {
+    async function fetchContent() {
         try {
-            const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}&region=IN`);
-            const data = await res.json();
-            database = data.results.map(i => ({
-                title: i.title || i.name,
-                poster: `https://image.tmdb.org/t/p/w500${i.poster_path}`,
-                id: i.id,
-                type: 'movie'
-            }));
-            displayContent(database);
-        } catch (e) { console.log("API error"); }
+            // Row 1: Indian Trending
+            const ind = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=IN&with_original_language=hi|te|ta&sort_by=popularity.desc`);
+            const indData = await ind.json();
+            renderGrid('indian-grid', indData.results);
+
+            // Row 2: Global Hits
+            const glob = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
+            const globData = await glob.json();
+            renderGrid('global-grid', globData.results);
+        } catch (e) { console.error("Error"); }
     }
 
-    function displayContent(items) {
-        const grid = document.getElementById('main-grid');
+    function renderGrid(gridId, items) {
+        const grid = document.getElementById(gridId);
         grid.innerHTML = items.map(i => `
-            <div class="card" onclick='openPlayer(${JSON.stringify(i).replace(/'/g, "&apos;")})'>
-                <img src="${i.poster}">
+            <div class="card" onclick='openPlayer(${JSON.stringify({id:i.id, type:'movie', title:i.title}).replace(/'/g, "")})'>
+                <img src="https://image.tmdb.org/t/p/w500${i.poster_path}">
                 <h3>${i.title}</h3>
             </div>
         `).join('');
     }
 
-    async function searchGlobal() {
-        let q = document.getElementById('searchInput').value;
-        if(q.length < 3) { if(q.length === 0) displayContent(database); return; }
-        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
-        const data = await res.json();
-        displayContent(data.results.filter(i => i.poster_path).map(i => ({
-            title: i.title || i.name,
-            poster: `https://image.tmdb.org/t/p/w500${i.poster_path}`,
-            id: i.id,
-            type: i.media_type || 'movie'
-        })));
-    }
-
     function openPlayer(item) {
         currentItem = item;
         document.getElementById('player-ui').style.display = 'block';
-        setServer(1, document.querySelector('.server-btn'));
+        setupServers();
     }
 
-    function setServer(num, btn) {
-        document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const id = currentItem.id;
-        const type = currentItem.type === 'tv' ? 'tv' : 'movie';
-        let url = "";
+    function setupServers() {
+        const container = document.getElementById('serverTabs');
+        // Server 1 is now vidsrc.cc (the stable one)
+        const servers = [
+            { name: "SERVER 1", url: `https://vidsrc.cc/v2/embed/movie/${currentItem.id}` },
+            { name: "SERVER 2", url: `https://vidsrc.pro/embed/movie/${currentItem.id}` },
+            { name: "SERVER 3", url: `https://embed.smashystream.com/playere.php?tmdb=${currentItem.id}` }
+        ];
         
-        // NEW UPDATED HIGH-SPEED SERVERS
-        if(num === 1) url = `https://vidsrc.pro/embed/${type}/${id}`;
-        if(num === 2) url = `https://vidsrc.cc/v2/embed/${type}/${id}`;
-        if(num === 3) url = `https://embed.smashystream.com/playere.php?tmdb=${id}`;
-        if(num === 4) url = `https://multiembed.mov/?video_id=${id}&tmdb=1`;
-        
+        container.innerHTML = servers.map((s, idx) => `
+            <button class="server-btn ${idx===0?'active':''}" onclick="loadSource('${s.url}', this)">${s.name}</button>
+        `).join('');
+        loadSource(servers[0].url, null);
+    }
+
+    function loadSource(url, btn) {
         document.getElementById('video-frame').src = url;
+        if(btn) {
+            document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
     }
 
-    document.getElementById('adminTrigger').onclick = () => {
-        adminClicks++;
-        if(adminClicks === 5) document.getElementById('login-modal').style.display = 'flex';
-        setTimeout(() => adminClicks = 0, 5000);
-    };
-
-    function checkLogin() {
-        if(document.getElementById('admin-user').value === "sans" && document.getElementById('admin-pass').value === "0510") {
-            alert("Admin Access Granted");
-            document.getElementById('login-modal').style.display = 'none';
-        } else alert("Invalid");
+    // --- SEARCH GLOBAL ---
+    async function searchGlobal() {
+        let q = document.getElementById('searchInput').value;
+        if(q.length < 3) return;
+        const res = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${q}`);
+        const data = await res.json();
+        document.getElementById('indian-grid').innerHTML = ''; // Clear for search
+        renderGrid('indian-grid', data.results);
     }
 
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
     function closePlayer() { document.getElementById('player-ui').style.display = 'none'; document.getElementById('video-frame').src = ''; }
+    
+    // Admin 5-click trigger
+    let clicks = 0;
+    document.getElementById('adminTrigger').onclick = () => {
+        clicks++;
+        if(clicks === 5) { alert("Admin: sans / 0510"); clicks = 0; }
+    };
 </script>
 </body>
 </html>
