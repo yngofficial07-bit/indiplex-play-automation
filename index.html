@@ -25,7 +25,7 @@
             font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; 
         }
 
-        /* --- ABYSSAL VOID INTRO (STAYING INTACT) --- */
+        /* --- ABYSSAL VOID INTRO (INTACT) --- */
         #intro { 
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
             background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -82,6 +82,18 @@
         }
         .logo-motto { font-size: 7px; color: #666; letter-spacing: 1.2px; margin-top: 4px; font-family: 'Montserrat'; font-weight: 900; text-transform: uppercase; }
 
+        /* --- HUB STYLE CATEGORIES --- */
+        .hub-categories {
+            display: flex; gap: 10px; overflow-x: auto; padding: 15px 5%; background: rgba(0,0,0,0.5);
+            scrollbar-width: none; white-space: nowrap; margin-top: 85px; position: sticky; top: 85px; z-index: 4000;
+        }
+        .hub-categories::-webkit-scrollbar { display: none; }
+        .cat-chip {
+            background: #1a1a1a; border: 1px solid #333; color: #ccc; padding: 8px 18px; 
+            border-radius: 4px; font-family: 'Orbitron'; font-size: 10px; cursor: pointer; transition: 0.3s;
+        }
+        .cat-chip:hover, .cat-chip.active { background: #ff9900; color: #000; border-color: #ff9900; font-weight: 900; }
+
         /* --- 3D RGB CARDS SECTION --- */
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
         #home-page { display: none; position: relative; z-index: 10; perspective: 1200px; }
@@ -128,14 +140,14 @@
             position: fixed; top: 0; right: -320px; width: 310px; height: 100%; 
             background: rgba(8,8,8,0.98); backdrop-filter: blur(40px); z-index: 6000; 
             transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); padding: 80px 25px; 
-            border-left: 1px solid var(--glass-border); 
+            border-left: 1px solid var(--glass-border); overflow-y: auto;
         }
         #side-menu.active { right: 0; }
         .menu-item { 
-            padding: 20px; color: #888; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); 
-            font-family: 'Montserrat'; font-size: 13px; display: flex; align-items: center; gap: 12px; transition: 0.3s;
+            padding: 15px; color: #888; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); 
+            font-family: 'Montserrat'; font-size: 12px; display: flex; align-items: center; gap: 12px; transition: 0.3s;
         }
-        .menu-item:hover { color: #fff; background: rgba(255,0,0,0.1); padding-left: 30px; }
+        .menu-item:hover { color: #fff; background: rgba(255,0,0,0.1); padding-left: 25px; }
 
         /* --- PLAYER & DETAILS OVERLAY --- */
         #details-overlay { 
@@ -151,15 +163,10 @@
         }
         .server-btn:hover { background: var(--red); box-shadow: 0 0 20px var(--red); }
 
-        /* EPISODE LIST STYLING */
-        .season-tabs { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 20px; margin-top: 20px; }
-        .s-tab { background: #111; border: 1px solid #333; padding: 10px 20px; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; border-radius: 5px; white-space: nowrap; }
-        .s-tab.active { background: var(--red); border-color: var(--red); }
         .ep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
         .ep-card { background: rgba(255,255,255,0.05); padding: 18px; border-radius: 12px; cursor: pointer; font-family: 'Montserrat'; transition: 0.3s; border: 1px solid transparent; }
         .ep-card:hover { background: rgba(255,0,0,0.2); border-color: var(--red); transform: translateX(5px); }
 
-        /* --- MODALS --- */
         #admin-modal, #about-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 20000; align-items: center; justify-content: center; }
         .modal-box { background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; }
     </style>
@@ -189,18 +196,26 @@
         </div>
     </nav>
 
-    <div style="padding-top:100px;">
-        <div id="search-section" style="display:none;">
+    <div class="hub-categories" id="hub-bar">
+        <div class="cat-chip active" onclick="loadGenre(null, this)">ALL</div>
+        <div class="cat-chip" onclick="loadGenre(28, this)">ACTION</div>
+        <div class="cat-chip" onclick="loadGenre(10749, this)">ROMANCE</div>
+        <div class="cat-chip" onclick="loadGenre(27, this)">HORROR</div>
+        <div class="cat-chip" onclick="loadGenre(878, this)">SCI-FI</div>
+        <div class="cat-chip" onclick="loadGenre(35, this)">COMEDY</div>
+        <div class="cat-chip" onclick="loadGenre(16, this)">ANIME</div>
+        <div class="cat-chip" onclick="loadGenre(18, this)">DRAMA</div>
+    </div>
+
+    <div>
+        <div id="search-section" style="display:none; padding-top:20px;">
             <h2 class="section-title">SEARCH RESULTS <button onclick="clearSearch()" style="float:right; background:red; border:none; color:white; padding:5px 12px; border-radius:20px; font-size:10px; margin-right:5%; cursor:pointer;">CLOSE</button></h2>
             <div class="container" id="search-grid"></div>
         </div>
 
         <div id="main-content">
-            <h2 class="section-title">LATEST POPULAR</h2>
+            <h2 class="section-title" id="grid-title">LATEST POPULAR</h2>
             <div class="container" id="popular-india"></div>
-            
-            <h2 class="section-title">PREMIUM SERIES</h2>
-            <div class="container" id="custom-grid"></div>
             
             <h2 class="section-title">TRENDING IN INDIA</h2>
             <div class="container" id="trending-india"></div>
@@ -211,6 +226,18 @@
 <div id="side-menu">
     <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; margin-bottom:30px; color:red;">&times;</div>
     <div class="menu-item" onclick="location.reload()"><i class="fa-solid fa-house"></i> HOME</div>
+    
+    <div style="color:red; font-size:10px; font-family:'Orbitron'; padding:15px; letter-spacing:2px;">CATEGORIES</div>
+    <div class="menu-item" onclick="loadGenre(28)"><i class="fa-solid fa-gun"></i> ACTION</div>
+    <div class="menu-item" onclick="loadGenre(10749)"><i class="fa-solid fa-heart"></i> ROMANTIC</div>
+    <div class="menu-item" onclick="loadGenre(27)"><i class="fa-solid fa-ghost"></i> HORROR</div>
+    <div class="menu-item" onclick="loadGenre(878)"><i class="fa-solid fa-rocket"></i> SCI-FI</div>
+    <div class="menu-item" onclick="loadGenre(35)"><i class="fa-solid fa-face-laugh"></i> COMEDY</div>
+    <div class="menu-item" onclick="loadGenre(16)"><i class="fa-solid fa-dragon"></i> ANIME</div>
+    <div class="menu-item" onclick="loadGenre(18)"><i class="fa-solid fa-masks-theater"></i> DRAMA</div>
+    <div class="menu-item" onclick="loadGenre(9648)"><i class="fa-solid fa-user-secret"></i> MYSTERY</div>
+
+    <div style="border-top: 1px solid #222; margin-top:10px;"></div>
     <div class="menu-item" onclick="openAbout()"><i class="fa-solid fa-circle-info"></i> ABOUT VISION</div>
     <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: red;"><i class="fa-solid fa-power-off"></i> LOGOUT ADMIN</div>
 </div>
@@ -221,15 +248,6 @@
 <div id="player-ui"><div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div><iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe><div class="server-container"><button class="server-btn" onclick="changeServer(1)">SERVER 1</button><button class="server-btn" onclick="changeServer(2)">SERVER 2</button></div></div>
 
 <script>
-    // --- DATABASE (CUSTOM) ---
-    const mirzapurData = {
-        title: "Mirzapur", poster: "https://image.tmdb.org/t/p/w500/6By7m99Y6Y1uK6CqRz3PzX7FzS.jpg", type: "tv", id: 82065
-    };
-    const moneyHeistData = {
-        title: "Money Heist", poster: "https://image.tmdb.org/t/p/w500/reEMJA1uzpG3XZ7jSbs67STdfpM.jpg", type: "tv", id: 71446
-    };
-    const customDatabase = [mirzapurData, moneyHeistData];
-
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
     let currentVideo = { id: null, type: 'movie', s: 1, e: 1 };
     let logoClicks = 0;
@@ -255,21 +273,31 @@
         updateLogoutButton();
     }, 6500);
 
-    // --- LOGIC ---
+    // --- DYNAMIC DATA LOADING ---
     async function loadHome() {
         const pop = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`);
         renderGrid('popular-india', (await pop.json()).results);
         
-        document.getElementById('custom-grid').innerHTML = customDatabase.map(item => `
-            <div class="card" onclick="openSeriesSelector(${item.id})">
-                <div class="peek-info">PREMIUM • 4K</div>
-                <img src="${item.poster}">
-                <h3>${item.title}</h3>
-            </div>
-        `).join('');
-
         const trend = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&region=IN`);
         renderGrid('trending-india', (await trend.json()).results);
+    }
+
+    async function loadGenre(genreId, element) {
+        if(element) {
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            element.classList.add('active');
+        }
+        if(document.getElementById('side-menu').classList.contains('active')) toggleMenu();
+
+        let url = genreId 
+            ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc`
+            : `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`;
+        
+        const res = await fetch(url);
+        const data = await res.json();
+        document.getElementById('grid-title').innerText = genreId ? "CATEGORY RESULTS" : "LATEST POPULAR";
+        renderGrid('popular-india', data.results);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderGrid(id, items) {
@@ -282,29 +310,20 @@
         `).join('');
     }
 
-    // --- NETFLIX STYLE SERIES ENGINE ---
     async function autoDetectType(id, type) {
-        if (type === 'tv' || type === 'series') {
-            openSeriesSelector(id);
-        } else {
-            openPlayer(id, 'movie');
-        }
+        if (type === 'tv' || type === 'series') openSeriesSelector(id);
+        else openPlayer(id, 'movie');
     }
 
     async function openSeriesSelector(id) {
         const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
         const data = await res.json();
-        currentVideo.id = id;
-        currentVideo.type = 'tv';
+        currentVideo = { id, type: 'tv', s: 1, e: 1 };
 
         let html = `<h1 style="font-family:'Orbitron'; font-size:clamp(24px, 5vw, 40px); margin-bottom:10px;">${data.name}</h1>`;
-        html += `<p style="color:#888; margin-bottom:20px;">${data.overview.slice(0, 150)}...</p>`;
-        
-        html += `<div class="season-tabs">`;
+        html += `<div class="season-tabs" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:20px;">`;
         data.seasons.forEach(s => {
-            if(s.season_number > 0) {
-                html += `<div class="s-tab ${s.season_number === 1 ? 'active' : ''}" id="tab-${s.season_number}" onclick="fetchEpisodes(${id}, ${s.season_number})">Season ${s.season_number}</div>`;
-            }
+            if(s.season_number > 0) html += `<div class="s-tab ${s.season_number === 1 ? 'active' : ''}" style="background:#111; border:1px solid #333; padding:10px 20px; cursor:pointer; font-size:10px; border-radius:5px; white-space:nowrap;" id="tab-${s.season_number}" onclick="fetchEpisodes(${id}, ${s.season_number})">Season ${s.season_number}</div>`;
         });
         html += `</div><div id="episode-list-container" class="ep-grid"></div>`;
         
@@ -314,15 +333,11 @@
     }
 
     async function fetchEpisodes(tvId, sNum) {
-        document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(`tab-${sNum}`).classList.add('active');
-        
         const res = await fetch(`https://api.themoviedb.org/3/tv/${tvId}/season/${sNum}?api_key=${API_KEY}`);
         const data = await res.json();
-        
         document.getElementById('episode-list-container').innerHTML = data.episodes.map(ep => `
             <div class="ep-card" onclick="playSeriesEp(${tvId}, ${sNum}, ${ep.episode_number})">
-                <span style="color:red; font-weight:900; margin-right:10px;">EP ${ep.episode_number}</span> ${ep.name}
+                <span style="color:red; font-weight:900;">EP ${ep.episode_number}</span> ${ep.name}
             </div>
         `).join('');
     }
@@ -341,7 +356,7 @@
     }
 
     function changeServer(num) { 
-        // SMART LINK TRIGGER: Opens on every server change to maximize revenue
+        // SMART LINK
         window.open("https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce", "_blank");
 
         const { id, type, s, e } = currentVideo; 
@@ -353,7 +368,6 @@
         }
     }
 
-    // --- REST OF THE FUNCTIONS ---
     async function searchGlobal(query) {
         const s = document.getElementById('search-section'); const m = document.getElementById('main-content');
         if(query.trim().length < 2) { s.style.display = 'none'; m.style.display = 'block'; return; }
