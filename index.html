@@ -16,15 +16,15 @@
         :root { --red: #ff0000; --glass-border: rgba(255, 255, 255, 0.1); }
         body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; }
 
-        /* --- 1. FULL ORIGINAL INTRO --- */
-        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; top:0; left:0; overflow: hidden; }
-        .intro-bg-lights { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.18) 0%, transparent 60%); filter: blur(80px); animation: ambientPulse 4s infinite alternate; }
-        @keyframes ambientPulse { 0% { transform: scale(1) translate(-5%, -5%); opacity: 0.5; } 100% { transform: scale(1.2) translate(5%, 5%); opacity: 0.8; } }
-        .intro-content { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; }
-        .premium-name { font-family: 'Montserrat', sans-serif; font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 900; color: #fff; letter-spacing: 15px; margin: 0; animation: luxuryGlow 3s ease-in-out forwards; }
-        .motto-intro { font-size: 0.75rem; color: #888; letter-spacing: 8px; margin-top: 20px; opacity: 0; transform: translateY(10px); animation: mottoReveal 2s ease-out forwards 1.2s; font-weight: 900; }
+        /* --- 1. FULL ORIGINAL PREMIUM INTRO --- */
+        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; top:0; left:0; }
+        .intro-bg-lights { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.2) 0%, transparent 60%); filter: blur(80px); animation: ambientPulse 4s infinite alternate; }
+        @keyframes ambientPulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.2); opacity: 0.8; } }
+        .intro-content { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 2; }
+        .premium-name { font-family: 'Montserrat'; font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 900; color: #fff; letter-spacing: 15px; animation: luxuryGlow 3s ease-in-out forwards; }
         @keyframes luxuryGlow { 0% { opacity: 0; letter-spacing: 30px; } 100% { letter-spacing: 12px; color: var(--red); } }
-        @keyframes mottoReveal { to { opacity: 1; transform: translateY(0); } }
+        .motto-intro { font-size: 0.75rem; color: #888; letter-spacing: 8px; margin-top: 20px; opacity: 0; animation: mottoReveal 2s forwards 1.2s; font-weight: 900; }
+        @keyframes mottoReveal { to { opacity: 1; } }
 
         /* --- 2. LOGO & NAV --- */
         nav { position: fixed; top: 0; width: 100%; height: 85px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); box-sizing: border-box; }
@@ -32,22 +32,22 @@
         .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 26px; background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; }
         .logo-motto { font-size: 7px; color: #666; letter-spacing: 1.2px; margin-top: 4px; font-family: 'Montserrat'; font-weight: 900; text-transform: uppercase; }
 
-        /* --- 3. 3D RGB CARDS (HOVER ANIMATION) --- */
+        /* --- 3. 3D HOVER + RGB NEON CARDS --- */
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
-        #home-page { display: none; position: relative; z-index: 10; padding-top: 110px; }
+        #home-page { display: none; position: relative; z-index: 10; padding-top: 110px; perspective: 1000px; }
         .section-title { padding-left: 5%; font-family: 'Orbitron'; font-size: 14px; color: var(--red); margin: 30px 0 15px; border-left: 4px solid var(--red); margin-left: 5%; padding-left: 12px; letter-spacing: 2px; }
         .container { padding: 0 5% 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; }
         
         .card { position: relative; border-radius: 20px; overflow: hidden; background: #000; cursor: pointer; padding: 2px; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); height: 320px; transform-style: preserve-3d; }
         
-        /* THE RGB ANIMATION ONLY ON HOVER */
+        /* RGB ON HOVER ONLY */
         .card::before { 
             content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; 
             background: conic-gradient(from 0deg, transparent, #ff0000, #00d2ff, #7a00ff, #ff0000); 
             animation: rotateBorder 4s linear infinite; z-index: -2; opacity: 0; transition: 0.5s;
         }
         .card:hover::before { opacity: 1; }
-        .card:hover { transform: translateY(-15px) rotateX(10deg) rotateY(5deg); box-shadow: 0 20px 40px rgba(255,0,0,0.3); }
+        .card:hover { transform: translateY(-15px) rotateX(8deg) rotateY(4deg); box-shadow: 0 20px 40px rgba(255,0,0,0.3); }
         .card::after { content: ""; position: absolute; inset: 4px; background: #000; border-radius: 17px; z-index: -1; }
         @keyframes rotateBorder { 100% { transform: rotate(360deg); } }
         
@@ -57,16 +57,17 @@
         /* --- 4. PLAYER & SERVERS --- */
         #player-ui { position: fixed; inset: 0; background: #000; display: none; z-index: 25000; }
         .server-container { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 30002; }
-        .server-btn { background: rgba(17, 17, 17, 0.8); color: white; border: 1px solid var(--red); padding: 12px 25px; border-radius: 5px; font-family: 'Orbitron'; font-size: 12px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
-        .server-btn:hover { background: var(--red); box-shadow: 0 0 20px var(--red); }
+        .server-btn { background: rgba(17, 17, 17, 0.8); color: white; border: 1px solid var(--red); padding: 12px 25px; border-radius: 5px; font-family: 'Orbitron'; font-size: 11px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
+        .server-btn:hover { background: var(--red); box-shadow: 0 0 15px var(--red); }
 
-        /* --- 5. OVERLAYS & MENU --- */
+        /* --- 5. VISION MODAL RESTORED --- */
+        #about-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; z-index: 10000; align-items: center; justify-content: center; }
+        .about-box { background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 25px; max-width: 400px; text-align: center; font-family: 'Montserrat'; box-shadow: 0 0 50px rgba(255,0,0,0.2); }
+        
+        #details-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(30px); display: none; z-index: 8000; overflow-y: auto; padding: 80px 5%; }
         #side-menu { position: fixed; top: 0; right: -320px; width: 310px; height: 100%; background: rgba(8,8,8,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.5s; padding: 80px 25px; border-left: 1px solid var(--glass-border); }
         #side-menu.active { right: 0; }
         .menu-item { padding: 20px; color: #888; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); font-family: 'Montserrat'; font-size: 13px; display: flex; align-items: center; gap: 12px; }
-        #about-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; z-index: 10000; align-items: center; justify-content: center; }
-        .about-box { background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 25px; max-width: 400px; text-align: center; font-family: 'Montserrat'; }
-        #details-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(30px); display: none; z-index: 8000; overflow-y: auto; padding: 80px 5%; }
     </style>
 </head>
 <body>
@@ -88,7 +89,7 @@
             <div class="logo-motto">YOUR PRIVACY IS OUR RESPONSIBILITY</div>
         </div>
         <div style="display:flex; align-items:center; gap:12px;">
-            <input type="text" id="searchInput" onkeyup="searchGlobal()" placeholder="Global Search..." style="background:rgba(255,255,255,0.05); border:1px solid #444; color:white; padding:10px 18px; border-radius:25px; outline:none; width:140px;">
+            <input type="text" id="searchInput" onkeyup="searchGlobal()" placeholder="Search..." style="background:rgba(255,255,255,0.05); border:1px solid #444; color:white; padding:10px 18px; border-radius:25px; outline:none; width:140px;">
             <div onclick="toggleMenu()" style="cursor:pointer; font-size:22px; color:white;"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
@@ -103,27 +104,22 @@
         <h2 class="section-title">TRENDING IN INDIA</h2>
         <div class="container" id="trending-india"></div>
     </div>
-    
-    <div id="search-view" style="display:none;">
-        <h2 class="section-title">GLOBAL SEARCH RESULTS</h2>
-        <div class="container" id="search-grid"></div>
-    </div>
 </div>
 
 <div id="side-menu">
     <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; margin-bottom:30px; color:red;">&times;</div>
     <div class="menu-item" onclick="location.reload()"><i class="fa-solid fa-house"></i> HOME</div>
     <div class="menu-item" onclick="openAbout()"><i class="fa-solid fa-eye"></i> ABOUT & VISION</div>
-    <div class="menu-item" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i> ADMIN LOGOUT</div>
+    <div class="menu-item" onclick="logoutAdmin()"><i class="fa-solid fa-right-from-bracket"></i> LOGOUT</div>
 </div>
 
 <div id="about-modal">
     <div class="about-box">
         <h2 style="font-family:'Orbitron'; color:red;">OUR VISION</h2>
-        <p style="color:#bbb;"><strong>Motive:</strong> Ad-free & Aesthetic Cinema.</p>
-        <p style="color:#bbb;"><strong>Vision:</strong> Privacy is our responsibility.</p>
+        <p style="color:#bbb;"><strong>Motive:</strong> Clean & Aesthetic Cinema.</p>
+        <p style="color:#bbb;"><strong>Vision:</strong> Your privacy is our responsibility.</p>
         <p style="color:#bbb;"><strong>Developer:</strong> Crafted by <b>Y07</b></p>
-        <button onclick="closeAbout()" style="margin-top:20px; background:red; color:white; border:none; padding:12px 30px; cursor:pointer; border-radius:8px;">CLOSE</button>
+        <button onclick="closeAbout()" style="margin-top:20px; background:red; color:white; border:none; padding:12px 30px; cursor:pointer; border-radius:8px; font-weight:900;">CLOSE</button>
     </div>
 </div>
 
@@ -135,7 +131,6 @@
 <div id="player-ui">
     <div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div>
     <iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
-    
     <div class="server-container">
         <button class="server-btn" onclick="changeServer(1)">SERVER 1</button>
         <button class="server-btn" onclick="changeServer(2)">SERVER 2</button>
@@ -148,11 +143,10 @@
 
 <script>
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
-    let clicks = 0;
     let currentVideo = { id: null, type: 'movie' };
     const customDatabase = typeof mirzapurData !== 'undefined' ? [mirzapurData, moneyHeistData, mismatchedData] : [];
 
-    // ORIGINAL INTRO LOGIC
+    // INTRO LOGIC RESTORED
     setTimeout(() => {
         document.getElementById('intro').style.opacity = '0';
         setTimeout(() => {
@@ -181,18 +175,6 @@
         renderGrid('trending-india', trendData.results);
     }
 
-    async function searchGlobal() {
-        let q = document.getElementById('searchInput').value;
-        const main = document.getElementById('content-area');
-        const searchV = document.getElementById('search-view');
-        if(q.length < 3) { main.style.display = 'block'; searchV.style.display = 'none'; return; }
-        main.style.display = 'none';
-        searchV.style.display = 'block';
-        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
-        const data = await res.json();
-        renderGrid('search-grid', data.results);
-    }
-
     function renderGrid(id, items) {
         document.getElementById(id).innerHTML = items.filter(i => i.poster_path).map(i => `
             <div class="card" onclick="openPlayer(${i.id}, '${i.media_type || 'movie'}')">
@@ -219,7 +201,9 @@
         item.seasons.forEach(s => {
             seasons += `<h2 style="color:red; font-family:'Orbitron'; margin-top:35px;">${s.name}</h2>`;
             s.episodes.forEach(ep => {
-                seasons += `<div style="padding:18px; background:rgba(255,255,255,0.05); margin:10px 0; border-radius:15px; cursor:pointer;" onclick="playStream('${ep.link}')">${ep.title}</div>`;
+                seasons += `<div style="padding:18px; background:rgba(255,255,255,0.05); margin:10px 0; border-radius:15px; cursor:pointer; display:flex; justify-content:space-between;" onclick="playStream('${ep.link}')">
+                    <span>${ep.title}</span><i class="fa-solid fa-play"></i>
+                </div>`;
             });
         });
         document.getElementById('details-body').innerHTML = `<h1>${item.title}</h1>` + seasons;
@@ -230,7 +214,7 @@
         document.getElementById('details-overlay').style.display = 'none';
         document.getElementById('video-frame').src = link;
         document.getElementById('player-ui').style.display = 'block';
-        document.querySelector('.server-container').style.display = 'none'; // Hide servers for custom links
+        document.querySelector('.server-container').style.display = 'none';
     }
 
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
