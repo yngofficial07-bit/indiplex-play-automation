@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>INDIPLEX | THE ABYSSAL VOID ENGINE</title>
+    <title>INDIPLEX | THE ABYSSAL VOID v3.5</title>
     
     <script src="https://pl28716477.effectivegatecpm.com/08/29/b7/0829b70499d7f6dcbbc947340a47ca65.js"></script>
     <script src="https://pl28703128.effectivegatecpm.com/ff/63/3e/ff633ed807491685eb8ea72ff91c6441.js"></script>
@@ -14,257 +14,267 @@
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
 
     <style>
-        /* --- [1] THE ORIGINAL ABYSSAL DESIGN SYSTEM --- */
+        /* --- [1] ROOT ARCHITECTURE & RESET --- */
         @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@800&family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;700&family=Montserrat:wght@200;500;900&display=swap');
         
         :root { 
             --red: #ff0000; 
-            --deep-red: #8b0000;
-            --neon-blue: #00d2ff;
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            --deep-black: #050505;
+            --neon-glow: 0 0 20px rgba(255, 0, 0, 0.5);
             --glass-border: rgba(255, 255, 255, 0.1);
-            --chrome-grad: linear-gradient(135deg, #000 0%, #222 10%, #666 25%, #fff 50%, #666 75%, #222 90%, #000 100%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { 
             background: #000; color: #fff; font-family: 'Roboto', sans-serif; 
             overflow-x: hidden; height: 100%; width: 100%;
         }
 
-        /* --- [2] ORIGINAL ABYSSAL VOID INTRO (NO CHANGES) --- */
-        #intro-stage { 
+        /* --- [2] THE ABYSSAL VOID INTRO (UNTOUCHED & FULL) --- */
+        #intro-vault { 
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
             background: #000; position: fixed; z-index: 99999; 
-            transition: opacity 1.8s cubic-bezier(0.7, 0, 0.3, 1); top:0; left:0; overflow: hidden;
+            transition: opacity 2s cubic-bezier(0.8, 0, 0.2, 1); top:0; left:0; overflow: hidden;
         }
-        #abyss-canvas { position: absolute; inset: 0; z-index: 10; pointer-events: none; }
-        .vignette-layer { position: absolute; inset: 0; z-index: 20; pointer-events: none; background: radial-gradient(circle, transparent 20%, #000 100%); }
+        #abyss-canvas { position: absolute; inset: 0; z-index: 5; }
+        .void-vignette { position: absolute; inset: 0; z-index: 10; pointer-events: none; background: radial-gradient(circle, transparent 15%, #000 95%); }
 
-        #heartbeat-scanner { 
-            position: absolute; width: 0; height: 1.5px; background: #fff; 
-            box-shadow: 0 0 40px #fff, 0 0 80px #fff; z-index: 10000; 
-            opacity: 0; top: 50%;
+        #pulse-line { 
+            position: absolute; width: 0; height: 2px; background: #fff; 
+            box-shadow: 0 0 40px #fff, 0 0 80px #fff; z-index: 20; 
+            animation: pulse-scan 3.8s cubic-bezier(0.15, 0, 0.15, 1) forwards; 
         }
-        @keyframes scan-animation { 
-            0% { width: 0; left: 0; opacity: 0; } 
-            20% { width: 100%; left: 0; opacity: 1; } 
-            80% { width: 100%; left: 0; opacity: 1; } 
-            100% { width: 0; left: 100%; opacity: 0; } 
-        }
+        @keyframes pulse-scan { 0% { width: 0; opacity: 0; } 50% { width: 100%; opacity: 1; } 100% { width: 0; opacity: 0; } }
 
-        .monolith-wrap { position: relative; z-index: 100; perspective: 2500px; transform-style: preserve-3d; }
-        .silver-monolith {
-            position: relative; width: clamp(280px, 80vw, 1100px); height: clamp(150px, 30vh, 480px);
-            background: var(--chrome-grad); background-size: 400% 400%; border-radius: 4px; 
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; transform: translateZ(-3000px) rotateX(25deg);
-            box-shadow: 0 0 200px rgba(255, 255, 255, 0.25), inset 0 0 120px rgba(0, 0, 0, 1);
-            animation: arrival 2.2s cubic-bezier(0.1, 1, 0.1, 1) forwards 3s, metallic-shimmer 8s linear infinite;
+        .monolith-chamber { position: relative; z-index: 100; perspective: 3500px; transform-style: preserve-3d; }
+        .chrome-monolith {
+            position: relative; width: clamp(290px, 80vw, 1150px); height: clamp(160px, 35vh, 500px);
+            background: linear-gradient(135deg, #000 0%, #333 15%, #999 35%, #fff 50%, #999 65%, #333 85%, #000 100%);
+            background-size: 350% 350%; border-radius: 4px; display: flex; justify-content: center; align-items: center;
+            opacity: 0; transform: translateZ(-3500px) rotateX(30deg);
+            box-shadow: 0 0 250px rgba(255, 255, 255, 0.2), inset 0 0 150px rgba(0, 0, 0, 1);
+            animation: arrival-fx 2.5s cubic-bezier(0.05, 0.9, 0.1, 1) forwards 3.5s, flow-fx 8s linear infinite;
         }
-        @keyframes arrival { 0% { opacity: 0; transform: translateZ(-3000px) rotateX(25deg); filter: blur(60px); } 100% { opacity: 1; transform: translateZ(0) rotateX(0deg); filter: blur(0); } }
-        @keyframes metallic-shimmer { 0% { background-position: 0% 50%; } 100% { background-position: 400% 50%; } }
+        @keyframes arrival-fx { 0% { opacity: 0; transform: translateZ(-3500px) rotateX(30deg); filter: blur(70px); } 100% { opacity: 1; transform: translateZ(0) rotateX(0deg); filter: blur(0); } }
+        @keyframes flow-fx { 0% { background-position: 0% 50%; } 100% { background-position: 350% 50%; } }
 
-        .brand-text { 
-            font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 12vw, 10rem); font-weight: 800; 
-            letter-spacing: 25px; color: #000; text-transform: uppercase; mix-blend-mode: multiply; 
-            opacity: 0; animation: reveal-text 2.5s cubic-bezier(0.19, 1, 0.22, 1) forwards 4.5s; 
+        .brand-manifest { 
+            font-family: 'Syncopate', sans-serif; font-size: clamp(2rem, 13vw, 11rem); font-weight: 800; 
+            letter-spacing: 25px; color: #000; mix-blend-mode: multiply; 
+            opacity: 0; animation: text-reveal 2.8s cubic-bezier(0.2, 1, 0.2, 1) forwards 4.8s; 
         }
-        @keyframes reveal-text { 0% { opacity: 0; letter-spacing: 120px; transform: scale(0.7); } 100% { opacity: 1; letter-spacing: -8px; transform: scale(1); } }
+        @keyframes text-reveal { 0% { opacity: 0; letter-spacing: 120px; transform: scale(0.6); } 100% { opacity: 1; letter-spacing: -10px; transform: scale(1); } }
 
         /* --- [3] UI NAVIGATION --- */
-        #vanta-background { position: fixed; inset: 0; z-index: -1; }
-        
         nav { 
-            position: fixed; top: 0; width: 100%; height: 95px; z-index: 5000; 
+            position: fixed; top: 0; width: 100%; height: 95px; z-index: 10000; 
             display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 6%; background: rgba(0, 0, 0, 0.94); backdrop-filter: blur(35px); 
+            padding: 0 6%; background: rgba(0, 0, 0, 0.96); backdrop-filter: blur(40px); 
             border-bottom: 1px solid var(--glass-border); 
         }
-        .logo-group { cursor: pointer; }
-        .nav-brand { 
-            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 30px; 
-            background: linear-gradient(to bottom, #ffffff 40%, #ff0000 100%); 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; 
+        .logo-box { cursor: pointer; transform-style: preserve-3d; }
+        .logo-main { 
+            font-family: 'Orbitron'; font-weight: 900; font-size: 32px; 
+            background: linear-gradient(to bottom, #fff 40%, #ff0000 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; 
         }
-        .nav-slogan { font-size: 7px; color: #777; letter-spacing: 1.5px; font-weight: 900; text-transform: uppercase; font-family: 'Montserrat'; margin-top: 5px; }
+        .logo-tag { font-size: 8px; color: #555; font-weight: 900; text-transform: uppercase; margin-top: 5px; font-family: 'Montserrat'; letter-spacing: 2px; }
 
-        .search-bar { 
-            background: rgba(255,255,255,0.06); border: 1px solid #333; color: #fff; 
-            padding: 12px 22px; border-radius: 30px; outline: none; width: 220px; 
-            font-family: 'Montserrat'; transition: 0.4s;
+        .search-container { position: relative; width: 250px; }
+        .search-input { 
+            width: 100%; background: #111; border: 1px solid #333; color: #fff; 
+            padding: 12px 25px; border-radius: 40px; outline: none; font-size: 13px; 
+            transition: 0.5s; font-family: 'Montserrat';
         }
-        .search-bar:focus { width: 300px; border-color: var(--red); }
+        .search-input:focus { width: 350px; border-color: var(--red); box-shadow: var(--neon-glow); }
 
-        /* --- [4] THE 3D RGB CARDS --- */
-        #home-wrapper { display: none; position: relative; z-index: 50; padding-top: 120px; }
-        .section-header { 
-            padding-left: 15px; font-family: 'Orbitron'; font-size: 15px; color: var(--red); 
-            border-left: 6px solid var(--red); margin: 45px 6% 25px; letter-spacing: 4px; font-weight: 900;
+        /* --- [4] 3D RGB CARDS --- */
+        #vanta-space { position: fixed; inset: 0; z-index: -1; }
+        #app-body { display: none; position: relative; z-index: 50; padding-top: 130px; }
+
+        .sec-title { 
+            padding-left: 20px; font-family: 'Orbitron'; font-size: 16px; color: var(--red); 
+            border-left: 7px solid var(--red); margin: 50px 6% 30px; letter-spacing: 5px; font-weight: 900;
         }
-        .movies-grid { 
-            padding: 0 6% 80px; display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 40px; 
+        .grid-layout { 
+            padding: 0 6% 100px; display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 45px; 
         }
 
-        .media-card { 
-            position: relative; border-radius: 25px; overflow: hidden; background: #000; 
-            cursor: pointer; padding: 2.5px; height: 340px; transform-style: preserve-3d; 
-            transition: transform 0.8s cubic-bezier(0.2, 1, 0.2, 1); 
+        .card-3d { 
+            position: relative; border-radius: 28px; background: #000; 
+            cursor: pointer; padding: 3px; height: 350px; transform-style: preserve-3d; 
+            transition: transform 0.8s cubic-bezier(0.1, 1, 0.1, 1); 
         }
-        .media-card::before { 
+        .card-3d::before { 
             content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; 
             background: conic-gradient(from 0deg, transparent, #ff0000, #00d2ff, #7a00ff, #ff0000); 
-            animation: border-spin 4s linear infinite; z-index: -2; opacity: 0; transition: 0.6s; 
+            animation: spin-rgb 4s linear infinite; z-index: -2; opacity: 0; transition: 0.6s; 
         }
-        .media-card:hover::before { opacity: 1; }
-        .media-card:hover { transform: translateY(-18px) rotateX(10deg) rotateY(6deg); }
-        .media-card::after { content: ""; position: absolute; inset: 4.5px; background: #0a0a0a; border-radius: 21px; z-index: -1; }
+        .card-3d:hover::before { opacity: 1; }
+        .card-3d:hover { transform: translateY(-20px) rotateX(12deg) rotateY(8deg); }
+        .card-3d::after { content: ""; position: absolute; inset: 5px; background: #080808; border-radius: 24px; z-index: -1; }
+        @keyframes spin-rgb { 100% { transform: rotate(360deg); } }
+
+        .card-3d img { width: 100%; height: 275px; object-fit: cover; border-radius: 24px 24px 0 0; }
+        .card-3d .info { height: 75px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; }
+        .card-3d h3 { font-size: 13px; font-family: 'Montserrat'; font-weight: 700; color: #eee; text-align: center; }
+
+        /* --- [5] SERIES ENGINE UI --- */
+        #series-overlay { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(60px); 
+            display: none; z-index: 20000; overflow-y: auto; padding: 130px 8% 80px;
+        }
+        .close-overlay { position: fixed; top: 40px; right: 50px; font-size: 60px; color: var(--red); cursor: pointer; z-index: 21000; transition: 0.4s; }
+        .close-overlay:hover { transform: rotate(90deg) scale(1.2); }
+
+        .series-header { display: flex; gap: 60px; flex-wrap: wrap; margin-bottom: 70px; }
+        .poster-box { width: 300px; border-radius: 25px; border: 1px solid var(--glass-border); box-shadow: 0 0 60px rgba(0,0,0,1); }
+        .meta-box { flex: 1; min-width: 350px; }
+        .meta-box h1 { font-family: 'Orbitron'; font-size: 50px; letter-spacing: 3px; margin-bottom: 20px; }
+        .meta-box p { color: #888; line-height: 1.9; font-size: 16px; margin-bottom: 40px; }
+
+        .tab-row { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; border-bottom: 1px solid #222; margin-bottom: 50px; scrollbar-width: none; }
+        .season-tab { 
+            padding: 16px 35px; background: #111; border: 1px solid #333; color: #777; 
+            border-radius: 12px; cursor: pointer; font-family: 'Orbitron'; font-size: 12px; 
+            white-space: nowrap; transition: 0.4s;
+        }
+        .season-tab.active { background: var(--red); color: #fff; border-color: var(--red); box-shadow: 0 0 25px rgba(255,0,0,0.4); }
+
+        .ep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
+        .ep-item { 
+            background: #0d0d0d; border: 1px solid var(--glass-border); padding: 25px; 
+            border-radius: 20px; cursor: pointer; transition: 0.4s; display: flex; align-items: center; gap: 25px;
+        }
+        .ep-item:hover { background: rgba(255,0,0,0.1); border-color: var(--red); transform: translateX(15px); }
+        .play-btn { width: 50px; height: 50px; background: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px var(--red); }
+
+        /* --- [6] PLAYER & SERVERS --- */
+        #player-chamber { position: fixed; inset: 0; background: #000; display: none; z-index: 50000; }
+        .player-nav { 
+            position: fixed; top: 30px; left: 30px; width: calc(100% - 60px); 
+            display: flex; justify-content: space-between; align-items: center; z-index: 50001; 
+        }
+        .back-circle { width: 60px; height: 60px; background: rgba(255,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(10px); }
+        .server-dock { display: flex; gap: 15px; }
+        .server-btn { background: #111; color: #fff; border: 1px solid var(--red); padding: 12px 25px; border-radius: 10px; cursor: pointer; font-family: 'Orbitron'; font-size: 11px; }
+        .server-btn.active { background: var(--red); box-shadow: var(--neon-glow); }
         
-        @keyframes border-spin { 100% { transform: rotate(360deg); } }
-        
-        .media-card img { width: 100%; height: 265px; object-fit: cover; border-radius: 21px 21px 0 0; }
-        .media-card h3 { font-size: 12px; font-family: 'Montserrat'; text-align: center; padding: 10px; }
+        #player-frame { width: 100%; height: 100%; border: none; }
 
-        /* --- [5] EXPANDED SERIES ENGINE --- */
-        #details-panel { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(50px); 
-            display: none; z-index: 10000; overflow-y: auto; padding: 120px 8% 60px;
+        /* --- [7] ADMIN & SIDEBAR --- */
+        #admin-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.99); display: none; z-index: 999999; align-items: center; justify-content: center; backdrop-filter: blur(30px); }
+        .login-card { background: #080808; border: 1px solid var(--red); padding: 60px; border-radius: 30px; width: 450px; text-align: center; }
+        .login-card input { width: 100%; padding: 20px; margin: 15px 0; background: #121212; border: 1px solid #333; color: #fff; border-radius: 12px; }
+
+        #side-panel { 
+            position: fixed; top: 0; right: -400px; width: 380px; height: 100%; 
+            background: rgba(5,5,5,0.99); backdrop-filter: blur(50px); z-index: 15000; 
+            transition: 0.8s cubic-bezier(0.8, 0, 0.2, 1); padding: 140px 50px; border-left: 1px solid var(--glass-border);
         }
-        .panel-close { position: fixed; top: 35px; right: 50px; font-size: 55px; color: var(--red); cursor: pointer; z-index: 11000; }
+        #side-panel.active { right: 0; }
+        .side-link { padding: 25px 0; color: #666; font-family: 'Orbitron'; cursor: pointer; border-bottom: 1px solid #111; display: flex; align-items: center; gap: 20px; transition: 0.3s; }
+        .side-link:hover { color: var(--red); padding-left: 15px; }
 
-        .series-hero { display: flex; gap: 50px; margin-bottom: 60px; flex-wrap: wrap; }
-        .series-poster { width: 280px; border-radius: 20px; border: 1px solid var(--glass-border); }
-        .series-title { font-family: 'Orbitron'; font-size: 45px; margin-bottom: 15px; }
-        .series-desc { color: #aaa; line-height: 1.8; font-size: 15px; margin-bottom: 30px; }
-
-        .season-track { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 20px; border-bottom: 1px solid #222; margin-bottom: 40px; }
-        .season-pill { 
-            background: #111; border: 1px solid #333; color: #888; padding: 14px 30px; 
-            border-radius: 10px; cursor: pointer; font-family: 'Orbitron'; font-size: 11px; white-space: nowrap;
+        /* Smart Link Ad Button */
+        .premium-ad-link { 
+            margin-top: 50px; padding: 20px; border: 1px dashed var(--red); 
+            text-align: center; border-radius: 15px; color: var(--red); 
+            font-family: 'Orbitron'; font-size: 12px; cursor: pointer;
+            text-decoration: none; display: block;
         }
-        .season-pill.active { background: var(--red); color: #fff; box-shadow: 0 0 20px rgba(255,0,0,0.4); }
-
-        .episode-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-        .episode-card { 
-            background: #0f0f0f; border: 1px solid var(--glass-border); padding: 22px; 
-            border-radius: 18px; cursor: pointer; transition: 0.4s; display: flex; align-items: center; gap: 20px;
-        }
-        .episode-card:hover { border-color: var(--red); transform: translateX(10px); }
-
-        /* --- [6] PLAYER & MULTI-SERVER --- */
-        #theater-mode { position: fixed; inset: 0; background: #000; display: none; z-index: 50000; }
-        .theater-nav { position: fixed; top: 30px; left: 30px; width: calc(100% - 60px); display: flex; justify-content: space-between; z-index: 50001; }
-        .back-btn { width: 55px; height: 55px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .server-btns { display: flex; gap: 10px; }
-        .srv-pill { background: #111; border: 1px solid var(--red); color: #fff; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'Orbitron'; font-size: 10px; }
-        .srv-pill.active { background: var(--red); }
-        #theater-frame { width: 100%; height: 100%; border: none; }
-
-        /* --- [7] SIDEBAR & SMART LINK --- */
-        #sidebar { 
-            position: fixed; top: 0; right: -350px; width: 340px; height: 100%; 
-            background: rgba(5,5,5,0.99); backdrop-filter: blur(50px); z-index: 9000; 
-            transition: 0.7s cubic-bezier(0.8, 0, 0.2, 1); padding: 120px 40px; border-left: 1px solid var(--glass-border);
-        }
-        #sidebar.open { right: 0; }
-        .menu-link { padding: 22px 0; color: #777; font-family: 'Orbitron'; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 20px; }
-        .menu-link:hover { color: var(--red); }
-
-        /* SMART LINK AS PREMIUM BUTTON */
-        .smart-link-ad { 
-            margin-top: 40px; padding: 20px; background: rgba(255,0,0,0.1); border: 1px dashed var(--red); 
-            border-radius: 15px; color: var(--red); text-align: center; text-decoration: none; 
-            display: block; font-family: 'Orbitron'; font-size: 12px; 
-        }
-
-        #admin-gate { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: none; z-index: 60000; align-items: center; justify-content: center; }
-        .admin-form { background: #050505; border: 1px solid var(--red); padding: 50px; border-radius: 25px; width: 400px; text-align: center; }
-        .admin-input { width: 100%; padding: 15px; margin: 10px 0; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; }
     </style>
 </head>
 <body>
 
-<div id="intro-stage">
+<div id="intro-vault">
     <canvas id="abyss-canvas"></canvas>
-    <div class="vignette-layer"></div>
-    <div id="heartbeat-scanner"></div>
-    <div class="monolith-wrap">
-        <div class="silver-monolith"><h1 class="brand-text">INDIPLEX</h1></div>
+    <div class="void-vignette"></div>
+    <div id="pulse-line"></div>
+    <div class="monolith-chamber">
+        <div class="chrome-monolith">
+            <h1 class="brand-manifest">INDIPLEX</h1>
+        </div>
     </div>
 </div>
 
-<div id="vanta-background"></div>
+<div id="vanta-space"></div>
 
-<div id="home-wrapper">
+<div id="app-body">
     <nav>
-        <div class="logo-group" onclick="triggerAdminSequence()">
-            <div class="nav-brand">INDIPLEX</div>
-            <div class="nav-slogan">THE ABYSSAL CINEMA EXPERIENCE</div>
+        <div class="logo-box" onclick="handleLogoClick()">
+            <div class="logo-main">INDIPLEX</div>
+            <div class="logo-tag">YOUR PRIVACY IS OUR RESPONSIBILITY</div>
         </div>
-        <div style="display:flex; align-items:center; gap:20px;">
-            <input type="text" id="globalSearch" class="search-bar" oninput="performSearch(this.value)" placeholder="Search...">
-            <div onclick="toggleSidebar()" style="cursor:pointer; font-size:26px; color:var(--red);"><i class="fa-solid fa-bars-staggered"></i></div>
+        <div style="display:flex; align-items:center; gap:25px;">
+            <div class="search-container">
+                <input type="text" id="mainSearch" class="search-input" oninput="runGlobalSearch(this.value)" placeholder="Search anything...">
+            </div>
+            <div onclick="toggleSidebar()" style="cursor:pointer; font-size:28px; color:var(--red);"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
 
-    <div id="default-view">
-        <div class="section-header">TRENDING NOW</div>
-        <div class="movies-grid" id="trending-grid"></div>
-        <div class="section-header">WEB SERIES</div>
-        <div class="movies-grid" id="series-grid"></div>
+    <div id="search-results-box" style="display:none;">
+        <div class="sec-title" style="display:flex; justify-content:space-between; align-items:center;">
+            RESULTS <button onclick="closeSearch()" style="background:red; border:none; color:#fff; padding:10px 25px; border-radius:30px; font-family:'Orbitron'; font-size:10px; cursor:pointer;">CLOSE</button>
+        </div>
+        <div class="grid-layout" id="search-grid"></div>
     </div>
-    
-    <div id="search-view" style="display:none;">
-        <div class="section-header">SEARCH RESULTS <button onclick="exitSearch()" style="float:right; background:red; border:none; color:white; padding:5px 15px; border-radius:20px; cursor:pointer;">X</button></div>
-        <div class="movies-grid" id="search-grid"></div>
+
+    <div id="home-view">
+        <div class="sec-title">POPULAR PRODUCTIONS</div>
+        <div class="grid-layout" id="popular-grid"></div>
+        
+        <div class="sec-title">PREMIUM WEB SERIES</div>
+        <div class="grid-layout" id="series-grid"></div>
     </div>
 </div>
 
-<div id="details-panel">
-    <div class="panel-close" onclick="hideDetails()">&times;</div>
-    <div id="details-injector"></div>
+<div id="series-overlay">
+    <div class="close-overlay" onclick="closeSeries()">&times;</div>
+    <div id="series-injector"></div>
 </div>
 
-<div id="theater-mode">
-    <div class="theater-nav">
-        <div class="back-btn" onclick="exitTheater()"><i class="fa-solid fa-arrow-left"></i></div>
-        <div class="server-btns">
-            <div class="srv-pill active" id="srv1" onclick="switchSrv(1)">SERVER 1</div>
-            <div class="srv-pill" id="srv2" onclick="switchSrv(2)">SERVER 2</div>
+<div id="player-chamber">
+    <div class="player-nav">
+        <div class="back-circle" onclick="closePlayer()"><i class="fa-solid fa-arrow-left"></i></div>
+        <div class="server-dock">
+            <button class="server-btn active" onclick="switchSrv(1)">SERVER 1</button>
+            <button class="server-btn" onclick="switchSrv(2)">SERVER 2</button>
         </div>
     </div>
-    <iframe id="theater-frame" allowfullscreen></iframe>
+    <iframe id="player-frame" allowfullscreen></iframe>
 </div>
 
-<div id="sidebar">
-    <div class="menu-link" onclick="location.reload()"><i class="fa-solid fa-house"></i> HOME</div>
-    <div class="menu-link" onclick="alert('Void Engine v3.0')"><i class="fa-solid fa-bolt"></i> STATUS</div>
+<div id="side-panel">
+    <div class="side-link" onclick="location.reload()"><i class="fa-solid fa-house-chimney"></i> INTERFACE HOME</div>
+    <div class="side-link" onclick="alert('Void Engine v3.5 | Secure Cinema')"><i class="fa-solid fa-microchip"></i> SYSTEM STATUS</div>
     
-    <a href="https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce" target="_blank" class="smart-link-ad">
+    <a href="https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce" target="_blank" class="premium-ad-link">
         <i class="fa-solid fa-crown"></i> UNLOCK PREMIUM SERVERS
     </a>
 
-    <div id="admin-logout" class="menu-link" onclick="handleLogout()" style="display:none; color:var(--red); margin-top:50px; border-top:1px solid #222;">
-        <i class="fa-solid fa-power-off"></i> LOGOUT ADMIN
+    <div id="admin-out" class="side-link" onclick="adminLogout()" style="display:none; color:var(--red); margin-top:60px;">
+        <i class="fa-solid fa-power-off"></i> DEACTIVATE ADMIN
     </div>
 </div>
 
-<div id="admin-gate">
-    <div class="admin-form">
-        <h2 style="color:var(--red); margin-bottom:20px;">ADMIN ACCESS</h2>
-        <input type="text" id="userK" class="admin-input" placeholder="ID">
-        <input type="password" id="passK" class="admin-input" placeholder="PIN">
-        <button onclick="verifyAdmin()" style="width:100%; padding:15px; background:var(--red); border:none; color:white; border-radius:10px; cursor:pointer;">LOGIN</button>
+<div id="admin-overlay">
+    <div class="login-card">
+        <h2 style="font-family:'Orbitron'; color:var(--red); margin-bottom:40px;">ADMIN AUTHENTICATION</h2>
+        <input type="text" id="adminId" placeholder="USER ID">
+        <input type="password" id="adminSecret" placeholder="SECRET KEY">
+        <button onclick="loginVerify()" style="width:100%; padding:22px; background:var(--red); border:none; color:#fff; border-radius:15px; font-family:'Orbitron'; cursor:pointer; font-weight:900;">VERIFY IDENTITY</button>
     </div>
 </div>
 
 <script>
-    const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
-    let adminTaps = 0;
+    const KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
+    let tapCounter = 0;
     let currentMedia = { id: null, type: null, s: 1, e: 1 };
 
-    // --- [1] RESTORED ABYSS CANVAS ---
+    // --- [1] ABYSSAL CANVAS ---
     const canvas = document.getElementById('abyss-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
@@ -276,7 +286,7 @@
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
             this.z = Math.random() * canvas.width;
-            this.v = -3.5;
+            this.v = -3.2;
         }
         update() {
             this.z += this.v;
@@ -292,7 +302,7 @@
         }
     }
 
-    function initAbyss() {
+    function bootAbyss() {
         for(let i=0; i<250; i++) particles.push(new Particle());
         loop();
     }
@@ -304,141 +314,146 @@
 
     // --- [2] SYSTEM BOOT ---
     window.onload = () => {
-        initAbyss();
-        const hb = document.getElementById('heartbeat-scanner');
-        setTimeout(() => { hb.style.opacity = '1'; hb.style.animation = 'scan-animation 3s forwards'; }, 1000);
-
+        bootAbyss();
         setTimeout(() => {
-            document.getElementById('intro-stage').style.opacity = '0';
+            document.getElementById('intro-vault').style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('intro-stage').style.display = 'none';
-                document.getElementById('home-wrapper').style.display = 'block';
-                VANTA.NET({ el: "#vanta-background", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0 });
-                fetchInitialData();
-                if(localStorage.getItem('indiplex_admin') === 'true') document.getElementById('admin-logout').style.display = 'flex';
-            }, 1800);
+                document.getElementById('intro-vault').style.display = 'none';
+                document.getElementById('app-body').style.display = 'block';
+                VANTA.NET({
+                    el: "#vanta-space", mouseControls: true, touchControls: true,
+                    color: 0xff0000, backgroundColor: 0x0, points: 12.0
+                });
+                loadContent();
+                if(localStorage.getItem('void_root') === 'true') document.getElementById('admin-out').style.display = 'flex';
+            }, 2000);
         }, 7500);
     };
 
-    // --- [3] DATA & SERIES ENGINE ---
-    async function fetchInitialData() {
-        const trend = await fetch(`https://api.themoviedb.org/3/trending/all/week?api_key=${API_KEY}&region=IN`);
+    // --- [3] DATA ENGINE ---
+    async function loadContent() {
+        const trend = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${KEY}&region=IN`);
         const tData = await trend.json();
-        renderGrid('trending-grid', tData.results);
+        buildGrid('popular-grid', tData.results);
 
-        const series = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&with_original_language=hi`);
+        const series = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${KEY}&with_original_language=hi`);
         const sData = await series.json();
-        renderGrid('series-grid', sData.results);
+        buildGrid('series-grid', sData.results);
     }
 
-    function renderGrid(id, list) {
-        document.getElementById(id).innerHTML = list.map(item => {
-            if(!item.poster_path) return '';
-            const type = item.media_type || (item.name ? 'tv' : 'movie');
+    function buildGrid(id, list) {
+        document.getElementById(id).innerHTML = list.map(i => {
+            if(!i.poster_path) return '';
+            const type = i.media_type || (i.name ? 'tv' : 'movie');
             return `
-                <div class="media-card" onclick="selectMedia(${item.id}, '${type}')">
-                    <img src="https://image.tmdb.org/t/p/w500${item.poster_path}">
-                    <h3>${item.title || item.name}</h3>
+                <div class="card-3d" onclick="handleChoice(${i.id}, '${type}')">
+                    <img src="https://image.tmdb.org/t/p/w500${i.poster_path}">
+                    <div class="info">
+                        <h3>${i.title || i.name}</h3>
+                    </div>
                 </div>
             `;
         }).join('');
     }
 
-    async function selectMedia(id, type) {
+    // --- [4] SERIES & PLAYER LOGIC ---
+    async function handleChoice(id, type) {
         if(type === 'movie') {
             currentMedia = { id, type, s: 0, e: 0 };
-            openTheater();
+            openPlayer();
         } else {
-            const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
+            const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${KEY}`);
             const data = await res.json();
             currentMedia.id = id; currentMedia.type = 'tv';
-            renderSeriesUI(data);
+            renderSeries(data);
         }
     }
 
-    function renderSeriesUI(data) {
-        const inj = document.getElementById('details-injector');
-        inj.innerHTML = `
-            <div class="series-hero">
-                <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="series-poster">
-                <div class="series-info">
-                    <h1 class="series-title">${data.name}</h1>
-                    <p class="series-desc">${data.overview}</p>
-                    <div class="season-track" id="season-tabs"></div>
+    function renderSeries(data) {
+        const target = document.getElementById('series-injector');
+        target.innerHTML = `
+            <div class="series-header">
+                <img src="https://image.tmdb.org/t/p/w500${data.poster_path}" class="poster-box">
+                <div class="meta-box">
+                    <h1>${data.name}</h1>
+                    <p>${data.overview}</p>
+                    <div class="tab-row" id="season-tabs"></div>
                 </div>
             </div>
-            <div id="ep-grid" class="episode-grid"></div>
+            <div id="ep-list" class="ep-grid"></div>
         `;
-        document.getElementById('details-panel').style.display = 'block';
+        document.getElementById('series-overlay').style.display = 'block';
         const tabs = data.seasons.filter(s => s.season_number > 0).map(s => 
-            `<div class="season-pill" id="sp-${s.season_number}" onclick="fetchEpisodes(${data.id}, ${s.season_number})">SEASON ${s.season_number}</div>`
+            `<div class="season-tab" id="st-${s.season_number}" onclick="fetchEps(${data.id}, ${s.season_number})">SEASON ${s.season_number}</div>`
         ).join('');
         document.getElementById('season-tabs').innerHTML = tabs;
-        fetchEpisodes(data.id, 1);
+        fetchEps(data.id, 1);
     }
 
-    async function fetchEpisodes(id, sNum) {
+    async function fetchEps(id, sNum) {
         currentMedia.s = sNum;
-        document.querySelectorAll('.season-pill').forEach(p => p.classList.remove('active'));
-        document.getElementById(`sp-${sNum}`).classList.add('active');
-        
-        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}/season/${sNum}?api_key=${API_KEY}`);
+        document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(`st-${sNum}`).classList.add('active');
+
+        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}/season/${sNum}?api_key=${KEY}`);
         const data = await res.json();
-        document.getElementById('ep-grid').innerHTML = data.episodes.map(e => `
-            <div class="episode-card" onclick="playEp(${e.episode_number})">
-                <div style="width:40px; height:40px; background:red; border-radius:50%; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-play"></i></div>
-                <div><b>EP ${e.episode_number}</b><br><small>${e.name}</small></div>
+        document.getElementById('ep-list').innerHTML = data.episodes.map(e => `
+            <div class="ep-item" onclick="setEp(${e.episode_number})">
+                <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                <div>
+                    <div style="font-weight:900;">EPISODE ${e.episode_number}</div>
+                    <div style="font-size:11px; color:#555;">${e.name}</div>
+                </div>
             </div>
         `).join('');
     }
 
-    function playEp(n) { currentMedia.e = n; openTheater(); }
+    function setEp(num) { currentMedia.e = num; openPlayer(); }
 
-    // --- [4] THEATER & SERVERS ---
-    function openTheater() {
-        document.getElementById('theater-mode').style.display = 'block';
+    function openPlayer() {
+        document.getElementById('player-chamber').style.display = 'block';
         switchSrv(1);
     }
 
-    function switchSrv(n) {
-        document.querySelectorAll('.srv-pill').forEach((p, i) => p.classList.toggle('active', i+1 === n));
+    function switchSrv(srv) {
         const { id, type, s, e } = currentMedia;
-        let url = n === 1 
+        document.querySelectorAll('.server-btn').forEach((b, i) => b.classList.toggle('active', i+1 === srv));
+        const url = srv === 1 
             ? `https://vidsrc.cc/v2/embed/${type}/${id}${type==='tv'?`/${s}/${e}`:''}`
             : `https://vidsrc.xyz/embed/${type}/${id}${type==='tv'?`/${s}/${e}`:''}`;
-        document.getElementById('theater-frame').src = url;
+        document.getElementById('player-frame').src = url;
     }
 
-    // --- [5] UTILS & ADMIN ---
-    function exitTheater() { document.getElementById('theater-mode').style.display = 'none'; document.getElementById('theater-frame').src = ''; }
-    function hideDetails() { document.getElementById('details-panel').style.display = 'none'; }
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    // --- [5] UTILITIES ---
+    function closePlayer() { document.getElementById('player-chamber').style.display = 'none'; document.getElementById('player-frame').src = ''; }
+    function closeSeries() { document.getElementById('series-overlay').style.display = 'none'; }
+    function toggleSidebar() { document.getElementById('side-panel').classList.toggle('active'); }
     
-    async function performSearch(q) {
-        if(q.length < 3) { exitSearch(); return; }
-        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
+    async function runGlobalSearch(q) {
+        if(q.length < 3) { closeSearch(); return; }
+        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${KEY}&query=${encodeURIComponent(q)}`);
         const data = await res.json();
-        document.getElementById('default-view').style.display = 'none';
-        document.getElementById('search-view').style.display = 'block';
-        renderGrid('search-grid', data.results);
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('search-results-box').style.display = 'block';
+        buildGrid('search-grid', data.results);
     }
-    function exitSearch() { 
-        document.getElementById('globalSearch').value = '';
-        document.getElementById('search-view').style.display = 'none';
-        document.getElementById('default-view').style.display = 'block';
+    function closeSearch() { 
+        document.getElementById('mainSearch').value = '';
+        document.getElementById('search-results-box').style.display = 'none';
+        document.getElementById('home-view').style.display = 'block';
     }
 
-    function triggerAdminSequence() {
-        adminTaps++;
-        if(adminTaps >= 10) { document.getElementById('admin-gate').style.display = 'flex'; adminTaps = 0; }
-        setTimeout(() => adminTaps = 0, 4000);
+    function handleLogoClick() {
+        tapCounter++;
+        if(tapCounter >= 10) { document.getElementById('admin-overlay').style.display = 'flex'; tapCounter = 0; }
+        setTimeout(() => tapCounter = 0, 4000);
     }
-    function verifyAdmin() {
-        if(document.getElementById('userK').value === 'sans' && document.getElementById('passK').value === '0510') {
-            localStorage.setItem('indiplex_admin', 'true'); location.reload();
-        } else { alert('Access Denied'); }
+    function loginVerify() {
+        if(document.getElementById('adminId').value === 'sans' && document.getElementById('adminSecret').value === '0510') {
+            localStorage.setItem('void_root', 'true'); alert('ROOT ACCESS GRANTED'); location.reload();
+        } else { alert('ACCESS DENIED'); }
     }
-    function handleLogout() { localStorage.removeItem('indiplex_admin'); location.reload(); }
+    function adminLogout() { localStorage.removeItem('void_root'); location.reload(); }
 </script>
 </body>
 </html>
