@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INDIPLEX | Aesthetic Cinema</title>
     
-    <script src="https://pl28703128.effectivegatecpm.com/ff/63/3e/ff633ed807491685eb8ea72ff91c6441.js"></script>
-    <script src="https://pl28703227.effectivegatecpm.com/e0/da/81/e0da8134581e4f8447faee3f94c03c5c.js"></script>
+    <script src="https://pl28716477.effectivegatecpm.com/08/29/b7/0829b70499d7f6dcbbc947340a47ca65.js"></script>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
@@ -26,7 +25,7 @@
             font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; 
         }
 
-        /* --- ABYSSAL VOID INTRO (KEEPING EVERYTHING INTACT) --- */
+        /* --- ABYSSAL VOID INTRO (STAYING INTACT) --- */
         #intro { 
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
             background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -301,7 +300,6 @@
         let html = `<h1 style="font-family:'Orbitron'; font-size:clamp(24px, 5vw, 40px); margin-bottom:10px;">${data.name}</h1>`;
         html += `<p style="color:#888; margin-bottom:20px;">${data.overview.slice(0, 150)}...</p>`;
         
-        // Seasons Tabs
         html += `<div class="season-tabs">`;
         data.seasons.forEach(s => {
             if(s.season_number > 0) {
@@ -343,10 +341,13 @@
     }
 
     function changeServer(num) { 
+        // SMART LINK TRIGGER: Opens on every server change to maximize revenue
+        window.open("https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce", "_blank");
+
         const { id, type, s, e } = currentVideo; 
         const frame = document.getElementById('video-frame');
         if(type === 'movie') {
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb=${id}`; 
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb/${id}`; 
         } else {
             frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
         }
