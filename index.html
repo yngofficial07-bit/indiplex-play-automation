@@ -5,65 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INDIPLEX | Aesthetic Cinema</title>
     
-    <script src="https://pl28703128.effectivegatecpm.com/ff/63/3e/ff633ed807491685eb8ea72ff91c6441.js"></script>
-    <script src="https://pl28703227.effectivegatecpm.com/e0/da/81/e0da8134581e4f8447faee3f94c03c5c.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Roboto:wght@300;400;700&family=Montserrat:wght@200;900&display=swap');
-
-        :root { 
-            --red: #ff0000; 
-            --glass: rgba(255, 255, 255, 0.05); 
-            --glass-border: rgba(255, 255, 255, 0.1); 
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Montserrat:wght@200;900&display=swap');
+        :root { --red: #ff0000; --glass: rgba(255, 255, 255, 0.05); --glass-border: rgba(255, 255, 255, 0.1); }
         body, html { margin: 0; padding: 0; background: #000; color: white; font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; }
 
-        /* --- 1. TERA ORIGINAL INTRO --- */
-        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; overflow: hidden; top: 0; left: 0; }
+        /* --- TERA ORIGINAL INTRO --- */
+        #intro { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s; top: 0; left: 0; }
         #intro.hide { opacity: 0; pointer-events: none; visibility: hidden; }
         .intro-bg-lights { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(229, 9, 20, 0.18) 0%, transparent 60%); filter: blur(80px); animation: ambientPulse 4s infinite alternate; }
-        @keyframes ambientPulse { 0% { transform: scale(1) translate(-5%, -5%); opacity: 0.5; } 100% { transform: scale(1.2) translate(5%, 5%); opacity: 0.8; } }
-        .intro-content { display: flex; flex-direction: column; align-items: center; text-align: center; position: relative; z-index: 2; }
-        .premium-name { font-family: 'Montserrat', sans-serif; font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 900; color: #fff; letter-spacing: 15px; margin: 0; animation: luxuryGlow 3s ease-in-out forwards; }
-        .motto { font-size: 0.75rem; color: #888; letter-spacing: 8px; margin-top: 20px; opacity: 0; transform: translateY(10px); animation: mottoReveal 2s ease-out forwards 1.2s; }
+        .premium-name { font-family: 'Montserrat', sans-serif; font-size: clamp(3.5rem, 12vw, 8rem); font-weight: 900; color: #fff; letter-spacing: 15px; animation: luxuryGlow 3s ease-in-out forwards; }
         @keyframes luxuryGlow { 0% { opacity: 0; letter-spacing: 30px; } 100% { letter-spacing: 12px; color: var(--red); } }
-        @keyframes mottoReveal { to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 2. NAV & UI --- */
-        nav { position: fixed; top: 0; width: 100%; height: 80px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; box-sizing: border-box; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); }
-        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 32px; background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; cursor: pointer; filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.6)); }
+        /* --- NAV & SIDE MENU (FIXED) --- */
+        nav { position: fixed; top: 0; width: 100%; height: 80px; z-index: 5000; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(30px); border-bottom: 1px solid var(--glass-border); }
+        .logo-nav { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 32px; background: linear-gradient(to bottom, #fff 30%, #ff0000 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
         
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .search-wrapper input { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 10px 20px; border-radius: 8px; color: #fff; outline: none; width: 140px; transition: 0.4s; }
-        .search-wrapper input:focus { width: 220px; border-color: var(--red); }
+        #side-menu { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.5s; padding: 100px 40px; border-left: 1px solid var(--glass-border); box-sizing: border-box; }
+        #side-menu.active { right: 0; }
+        .menu-item { padding: 20px 0; color: #777; cursor: pointer; font-family: 'Montserrat'; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
         #home-page { display: none; position: relative; z-index: 10; padding-top: 120px; }
 
-        /* --- 3. NEON TEXTURE CARDS --- */
+        /* --- NEON CARDS --- */
         .container { padding: 0 5% 50px; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 40px; }
         .card { position: relative; border-radius: 20px; overflow: hidden; background: #000; cursor: pointer; padding: 2px; transition: 0.5s; height: 350px; }
-        .card:hover { transform: scale(1.05); }
         .card::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent, #ff0000, #00d2ff, #7a00ff, #ff0000); animation: rotateBorder 4s linear infinite; z-index: -2; }
         .card::after { content: ""; position: absolute; inset: 4px; background: #000; border-radius: 17px; z-index: -1; }
-        @keyframes rotateBorder { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes rotateBorder { 100% { transform: rotate(360deg); } }
         .card img { width: 100%; height: 280px; object-fit: cover; border-radius: 17px 17px 0 0; position: relative; z-index: 2; }
-        .card h3 { position: relative; z-index: 2; font-size: 13px; font-family: 'Montserrat'; font-weight: 700; padding: 12px; text-align: center; margin: 0; background: #000; height: 60px; display: flex; align-items: center; justify-content: center; }
+        .card h3 { font-size: 13px; font-family: 'Montserrat'; padding: 12px; text-align: center; margin: 0; background: #000; height: 60px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 2; }
 
-        /* --- 4. SIDE MENU (FIXED) --- */
-        #side-menu { position: fixed; top: 0; right: -320px; width: 300px; height: 100%; background: rgba(0,0,0,0.98); backdrop-filter: blur(40px); z-index: 6000; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); padding: 100px 40px; box-sizing: border-box; border-left: 1px solid var(--glass-border); }
-        #side-menu.active { right: 0; }
-        .menu-item { padding: 20px 0; font-size: 14px; font-family: 'Montserrat'; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; color: #777; transition: 0.3s; }
-        .menu-item:hover { color: #fff; padding-left: 10px; border-bottom-color: var(--red); }
-
-        /* --- 5. MODALS & PLAYER --- */
+        /* --- MULTI-SERVER PLAYER --- */
         #player-ui { position: fixed; inset: 0; background: #000; display: none; z-index: 25000; }
-        #login-modal { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98); display: none; justify-content: center; align-items: center; z-index: 20000; }
-        .modal-box { background: #0a0a0a; padding: 40px; border-radius: 25px; border: 1px solid var(--red); text-align: center; width: 320px; }
+        .server-tabs { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; }
+        .server-btn { background: rgba(255,0,0,0.8); color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 900; font-family: 'Orbitron'; font-size: 10px; }
+
+        #login-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 30000; }
+        .login-box { background: #0a0a0a; padding: 40px; border: 1px solid var(--red); border-radius: 20px; text-align: center; }
     </style>
 </head>
 <body>
@@ -72,7 +56,6 @@
     <div class="intro-bg-lights"></div>
     <div class="intro-content">
         <h1 class="premium-name">INDIPLEX</h1>
-        <div class="motto">YOUR PRIVACY IS OUR RESPONSIBILITY</div>
     </div>
 </div>
 
@@ -81,11 +64,9 @@
 <div id="home-page">
     <nav>
         <div class="logo-nav" id="adminTrigger">INDIPLEX</div>
-        <div class="nav-right">
-            <div class="search-wrapper">
-                <input type="text" id="searchInput" placeholder="Search movies..." onkeyup="searchGlobal()">
-            </div>
-            <div onclick="toggleMenu()" style="cursor:pointer; color:white; font-size:24px;"><i class="fa-solid fa-bars-staggered"></i></div>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <input type="text" id="searchInput" onkeyup="searchGlobal()" placeholder="Search movies..." style="background:var(--glass); border:1px solid var(--glass-border); color:white; padding:10px; border-radius:10px; outline:none;">
+            <div onclick="toggleMenu()" style="cursor:pointer; font-size:24px;"><i class="fa-solid fa-bars-staggered"></i></div>
         </div>
     </nav>
     <div class="container" id="main-grid"></div>
@@ -94,111 +75,115 @@
 <div id="side-menu">
     <div onclick="toggleMenu()" style="position:absolute; top:30px; right:30px; font-size:30px; cursor:pointer;">&times;</div>
     <div class="menu-item" onclick="location.reload()">HOME</div>
-    <div class="menu-item" onclick="alert('IndiPlex Global v2.0')">ABOUT</div>
-    <div class="menu-item" onclick="logoutAdmin()">ADMIN LOGOUT</div>
-</div>
-
-<div id="login-modal">
-    <div class="modal-box">
-        <h2 style="color:var(--red); font-family:'Orbitron';">ADMIN</h2>
-        <input type="text" id="admin-user" placeholder="ID" style="width:100%; padding:12px; margin:10px 0; background:#111; color:white; border:1px solid #333;">
-        <input type="password" id="admin-pass" placeholder="KEY" style="width:100%; padding:12px; margin:10px 0; background:#111; color:white; border:1px solid #333;">
-        <button onclick="checkLogin()" style="width:100%; padding:12px; background:var(--red); color:white; border:none; cursor:pointer; font-weight:900;">ACCESS</button>
-        <p onclick="document.getElementById('login-modal').style.display='none'" style="margin-top:10px; cursor:pointer; font-size:12px; color:#555;">Close</p>
-    </div>
+    <div class="menu-item" onclick="alert('Indiplex v2.0')">VERSION</div>
+    <div class="menu-item" onclick="document.getElementById('login-modal').style.display='flex'">ADMIN</div>
 </div>
 
 <div id="player-ui">
-    <div onclick="closePlayer()" style="position:fixed; top:25px; left:25px; font-size:35px; color:white; cursor:pointer; z-index:30000;"><i class="fa-solid fa-chevron-left"></i></div>
+    <div onclick="closePlayer()" style="position:fixed; top:25px; left:25px; font-size:35px; color:white; cursor:pointer; z-index:30001;"><i class="fa-solid fa-chevron-left"></i></div>
     <iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+    <div class="server-tabs">
+        <button class="server-btn" onclick="setServer(1)">SERVER 1</button>
+        <button class="server-btn" onclick="setServer(2)">SERVER 2</button>
+        <button class="server-btn" onclick="setServer(3)">SERVER 3</button>
+    </div>
+</div>
+
+<div id="login-modal">
+    <div class="login-box">
+        <h2 style="color:var(--red); font-family:'Orbitron';">ADMIN LOGIN</h2>
+        <input type="text" id="admin-user" placeholder="ID" style="display:block; width:100%; margin:10px 0; padding:10px; background:#111; color:white; border:1px solid #333;">
+        <input type="password" id="admin-pass" placeholder="KEY" style="display:block; width:100%; margin:10px 0; padding:10px; background:#111; color:white; border:1px solid #333;">
+        <button onclick="checkLogin()" style="width:100%; padding:10px; background:var(--red); color:white; border:none; cursor:pointer;">ACCESS</button>
+    </div>
 </div>
 
 <script>
-    let clicks = 0;
     const API_KEY = 'fe6f0e951aff4fb2565255ce0d940fc6';
     let database = [];
+    let currentItem = null;
+    let adminClicks = 0;
 
-    // --- 1. INTRO & VANTA TIMER ---
-    setTimeout(() => { 
-        document.getElementById('intro').classList.add('hide'); 
+    // --- INTRO & VANTA ---
+    setTimeout(() => {
+        document.getElementById('intro').classList.add('hide');
         document.getElementById('home-page').style.display = 'block';
-        try {
-            VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12 });
-        } catch(e){}
-        loadMovies(); 
+        VANTA.NET({ el: "#vanta-canvas", mouseControls: true, touchControls: true, color: 0xff0000, backgroundColor: 0x0, points: 12 });
+        loadMovies();
     }, 6000);
 
-    // --- 2. LOAD INDIAN & TRENDING MOVIES ---
+    // --- LOAD DUNIYA KI MOVIES (INDIAN PRIORITY) ---
     async function loadMovies() {
         try {
-            // Indian Mix (Bollywood + South)
-            const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=IN&with_original_language=hi|te|ta|ml|kn&sort_by=popularity.desc`);
+            const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=IN&with_original_language=hi|te|ta&sort_by=popularity.desc`);
             const data = await res.json();
-            database = data.results.map(item => ({
-                title: item.title || item.name,
-                poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                id: item.id,
+            database = data.results.map(i => ({
+                title: i.title,
+                poster: `https://image.tmdb.org/t/p/w500${i.poster_path}`,
+                id: i.id,
                 type: 'movie'
             }));
             displayContent(database);
-        } catch (e) { console.log("API Error"); }
-    }
-
-    // --- 3. SEARCH DUNIYA BHAR KI MOVIES ---
-    async function searchGlobal() {
-        let term = document.getElementById('searchInput').value;
-        if(term.length < 3) { if(term.length === 0) displayContent(database); return; }
-
-        try {
-            const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${term}`);
-            const data = await res.json();
-            const results = data.results.filter(i => i.poster_path).map(item => ({
-                title: item.title || item.name,
-                poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
-                id: item.id,
-                type: item.media_type || 'movie'
-            }));
-            displayContent(results);
-        } catch (e) {}
+        } catch (e) { console.error("TMDB Load Error"); }
     }
 
     function displayContent(items) {
         const grid = document.getElementById('main-grid');
-        grid.innerHTML = '';
-        items.forEach(item => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `<img src="${item.poster}"><h3>${item.title}</h3>`;
-            card.onclick = () => playMovie(item);
-            grid.appendChild(card);
-        });
+        grid.innerHTML = items.map(i => `
+            <div class="card" onclick='openPlayer(${JSON.stringify(i).replace(/'/g, "&apos;")})'>
+                <img src="${i.poster}">
+                <h3>${i.title}</h3>
+            </div>
+        `).join('');
     }
 
-    function playMovie(item) {
-        const url = item.type === 'tv' 
-            ? `https://vidsrc.me/embed/tv?tmdb=${item.id}&season=1&episode=1` 
-            : `https://vidsrc.me/embed/movie?tmdb=${item.id}`;
-        document.getElementById('video-frame').src = url; 
-        document.getElementById('player-ui').style.display = 'block'; 
+    // --- SEARCH GLOBAL ---
+    async function searchGlobal() {
+        let q = document.getElementById('searchInput').value;
+        if(q.length < 3) { if(q.length === 0) displayContent(database); return; }
+        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${q}`);
+        const data = await res.json();
+        displayContent(data.results.filter(i => i.poster_path).map(i => ({
+            title: i.title || i.name,
+            poster: `https://image.tmdb.org/t/p/w500${i.poster_path}`,
+            id: i.id,
+            type: i.media_type || 'movie'
+        })));
     }
 
-    // --- 4. ADMIN PANEL (sans/0510) ---
-    document.getElementById('adminTrigger').addEventListener('click', () => {
-        clicks++;
-        if(clicks === 5) document.getElementById('login-modal').style.display = 'flex';
-        setTimeout(() => clicks = 0, 5000);
-    });
+    // --- PLAYER & SERVERS ---
+    function openPlayer(item) {
+        currentItem = item;
+        document.getElementById('player-ui').style.display = 'block';
+        setServer(1);
+    }
+
+    function setServer(num) {
+        const id = currentItem.id;
+        const type = currentItem.type === 'tv' ? 'tv' : 'movie';
+        let url = "";
+        if(num === 1) url = `https://vidsrc.me/embed/${type}?tmdb=${id}`;
+        if(num === 2) url = `https://vidsrc.to/embed/${type}/${id}`;
+        if(num === 3) url = `https://embed.smashystream.com/playere.php?tmdb=${id}`;
+        document.getElementById('video-frame').src = url;
+    }
+
+    // --- ADMIN LOGIC (sans/0510) ---
+    document.getElementById('adminTrigger').onclick = () => {
+        adminClicks++;
+        if(adminClicks === 5) document.getElementById('login-modal').style.display = 'flex';
+        setTimeout(() => adminClicks = 0, 5000);
+    };
 
     function checkLogin() {
         if(document.getElementById('admin-user').value === "sans" && document.getElementById('admin-pass').value === "0510") {
-            alert("Admin Access Granted");
+            alert("Welcome Boss!");
             document.getElementById('login-modal').style.display = 'none';
-        } else alert("Access Denied");
+        } else { alert("Nikal!"); }
     }
 
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
     function closePlayer() { document.getElementById('player-ui').style.display = 'none'; document.getElementById('video-frame').src = ''; }
-    function logoutAdmin() { location.reload(); }
 </script>
 </body>
 </html>
