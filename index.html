@@ -291,7 +291,7 @@
     </div>
     <div class="server-container">
         <button class="server-btn" onclick="changeServer(1)">SERVER 1</button>
-        <button class="server-btn" onclick="changeServer(2)">SERVER 2</button>
+        <button class="server-btn" onclick="changeServer(2)">SERVER 2 (WITH ADS)</button>
     </div>
 </div>
 
@@ -407,12 +407,12 @@
         const frame = document.getElementById('video-frame');
         if(type === 'movie') {
             // Server 1: VidSrc CC
-            // Server 2: VidSrc ME (Fixed Media Unavailable)
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.me/embed/movie?tmdb=${id}`; 
+            // Server 2: VidSrc PRO (ADS but working)
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.pro/embed/movie/${id}`; 
         } else {
             // Server 1: VidSrc CC
-            // Server 2: VidSrc ME
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.me/embed/tv?tmdb=${id}&sea=${s}&epi=${e}`;
+            // Server 2: VidSrc PRO (ADS but working)
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.pro/embed/tv/${id}/${s}/${e}`;
         }
     }
 
