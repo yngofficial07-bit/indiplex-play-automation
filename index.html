@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>INDIPLEX | Aesthetic Cinema</title>
     
-    <script src="https://pl28716477.effectivegatecpm.com/08/29/b7/0829b70499d7f6dcbbc947340a47ca65.js"></script>
+    <script>
+        if (localStorage.getItem('isLogged') !== 'true') {
+            const script = document.createElement('script');
+            script.src = "https://pl28716477.effectivegatecpm.com/08/29/b7/0829b70499d7f6dcbbc947340a47ca65.js";
+            document.head.appendChild(script);
+        }
+    </script>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
@@ -25,7 +31,7 @@
             font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; 
         }
 
-        /* --- ABYSSAL VOID INTRO (INTACT & COMPLETE) --- */
+        /* --- ABYSSAL VOID INTRO (STRICTLY COMPLETE) --- */
         #intro { 
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
             background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -82,7 +88,7 @@
         }
         .logo-motto { font-size: 7px; color: #666; letter-spacing: 1.2px; margin-top: 4px; font-family: 'Montserrat'; font-weight: 900; text-transform: uppercase; }
 
-        /* --- HUB CATEGORIES --- */
+        /* --- HUB BAR --- */
         .hub-categories {
             display: flex; gap: 10px; overflow-x: auto; padding: 15px 5%; background: rgba(0,0,0,0.95);
             scrollbar-width: none; white-space: nowrap; 
@@ -96,7 +102,7 @@
         }
         .cat-chip:hover, .cat-chip.active { background: #ff9900; color: #000; border-color: #ff9900; font-weight: 900; }
 
-        /* --- 3D RGB CARDS SECTION --- */
+        /* --- CARDS & GRID --- */
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
         #home-page { display: none; position: relative; z-index: 10; perspective: 1200px; padding-top: 155px; } 
         
@@ -110,6 +116,7 @@
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; 
         }
         
+        /* 3D RGB HOVER ANIMATION (INTACT) */
         .card { 
             position: relative; border-radius: 20px; overflow: hidden; background: #000; 
             cursor: pointer; padding: 2px; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); 
@@ -152,7 +159,7 @@
         }
         .menu-item:hover { color: #fff; background: rgba(255,0,0,0.1); padding-left: 25px; }
 
-        /* --- PLAYER & OVERLAYS --- */
+        /* --- PLAYER --- */
         #details-overlay { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(30px); 
             display: none; z-index: 8000; overflow-y: auto; padding: 80px 5%; 
@@ -166,7 +173,6 @@
         }
         .server-btn:hover { background: var(--red); box-shadow: 0 0 20px var(--red); }
 
-        /* --- CREDIT BADGE STYLE --- */
         #credit-badge {
             position: fixed; bottom: 20px; right: 20px; background: rgba(20,20,20,0.8);
             backdrop-filter: blur(10px); color: #fff; padding: 8px 15px; border-radius: 30px;
@@ -247,7 +253,7 @@
     <div class="menu-item" onclick="loadGenre(18)"><i class="fa-solid fa-masks-theater"></i> DRAMA</div>
     <div style="border-top: 1px solid #222; margin-top:10px;"></div>
     <div class="menu-item" onclick="openAbout()"><i class="fa-solid fa-circle-info"></i> ABOUT VISION</div>
-    <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: red;"><i class="fa-solid fa-power-off"></i> LOGOUT ADMIN</div>
+    <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: #ff3333; font-weight: bold;"><i class="fa-solid fa-power-off"></i> LOGOUT ADMIN</div>
 </div>
 
 <div id="credit-badge">ENERGY: --</div>
@@ -268,8 +274,7 @@
     let currentVideo = { id: null, type: 'movie', s: 1, e: 1 };
     let logoClicks = 0;
 
-    // --- CREDIT SYSTEM LOGIC ---
-    let userCredits = localStorage.getItem('indiplex_credits') ? parseInt(localStorage.getItem('indiplex_credits')) : 1;
+    let userCredits = localStorage.getItem('indiplex_credits') ? parseInt(localStorage.getItem('indiplex_credits')) : 240;
     const SMART_LINK = "https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce";
 
     function startCreditSystem() {
@@ -301,23 +306,21 @@
                 <button onclick="refuelEnergy()" style="background:red; color:white; border:none; padding:18px 40px; border-radius:5px; cursor:pointer; font-family:'Orbitron'; margin-top:30px; box-shadow: 0 0 30px rgba(255,0,0,0.5);">
                     REFUEL ENERGY (+6 HOURS)
                 </button>
-                <p style="margin-top:20px; font-size:10px; color:#555;">(Wait 60s on the transmission page to restore access)</p>
             </div>
         `;
     }
 
     function refuelEnergy() {
         window.open(SMART_LINK, "_blank");
-        alert("Establishing transmission... Please stay on the ad page for 60 seconds.");
+        alert("Establishing transmission...");
         setTimeout(() => {
             userCredits = 360;
             localStorage.setItem('indiplex_credits', userCredits);
-            alert("Energy Restored! +6 Hours Added.");
             location.reload();
         }, 60000);
     }
 
-    // --- ABYSSAL VOID ENGINE ---
+    /* --- INTRO ENGINE (RECHECKED) --- */
     const canvas = document.getElementById('abyss-canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -339,7 +342,6 @@
         updateLogoutButton();
     }, 6500);
 
-    // --- DYNAMIC DATA LOADING ---
     async function loadHome() {
         const pop = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`);
         renderGrid('popular-india', (await pop.json()).results);
@@ -440,10 +442,18 @@
     function closeDetails() { document.getElementById('details-overlay').style.display = 'none'; }
     function logoTrigger() { logoClicks++; if(logoClicks === 10) { openAdmin(); logoClicks = 0; } setTimeout(() => logoClicks = 0, 5000); }
     function checkLogin() { if(document.getElementById('adminUser').value === 'sans' && document.getElementById('adminPass').value === '0510') { localStorage.setItem('isLogged', 'true'); updateLogoutButton(); alert('Access Granted'); closeAdmin(); location.reload(); } else { alert('Unauthorized'); } }
-    function adminLogout() { localStorage.removeItem('isLogged'); updateLogoutButton(); alert('Logged Out'); location.reload(); }
-    function updateLogoutButton() { const btn = document.getElementById('logout-item'); if(btn) btn.style.display = localStorage.getItem('isLogged') === 'true' ? 'flex' : 'none'; }
+    
+    function adminLogout() { 
+        localStorage.removeItem('isLogged'); 
+        alert('Admin Logged Out'); 
+        location.reload(); 
+    }
+    
+    function updateLogoutButton() { 
+        const btn = document.getElementById('logout-item'); 
+        if(btn) btn.style.display = localStorage.getItem('isLogged') === 'true' ? 'flex' : 'none'; 
+    }
     window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 </script>
 </body>
 </html>
-
