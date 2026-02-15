@@ -282,7 +282,12 @@
 <div id="player-ui">
     <div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div>
     <div id="player-container" style="width:100%; height:100%;">
-        <iframe id="video-frame" style="width:100%; height:100%; border:none;" allow="autoplay; fullscreen" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" allowfullscreen></iframe>
+        <iframe id="video-frame" 
+        style="width:100%; height:100%; border:none;" 
+        allow="autoplay; fullscreen" 
+        sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups allow-popups-to-escape-sandbox" 
+        allowfullscreen>
+</iframe>
     </div>
     <div class="server-container">
         <button class="server-btn" onclick="changeServer(1)">SERVER 1</button>
@@ -430,3 +435,4 @@
 </script>
 </body>
 </html>
+
