@@ -6,7 +6,6 @@
     <title>INDIPLEX | Aesthetic Cinema</title>
     
     <script>
-        // FIX: Ads only show if NOT logged in AND NO credits left
         const savedCredits = localStorage.getItem('indiplex_credits') ? parseInt(localStorage.getItem('indiplex_credits')) : 240;
         const isLogged = localStorage.getItem('isLogged') === 'true';
         
@@ -35,7 +34,7 @@
             font-family: 'Roboto', sans-serif; overflow-x: hidden; height: 100%; 
         }
 
-        /* --- ABYSSAL VOID INTRO --- */
+        /* --- ABYSSAL VOID INTRO ENGINE --- */
         #intro { 
             height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; 
             background: #000; position: fixed; z-index: 9999; transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
@@ -78,7 +77,7 @@
             100% { opacity: 1; letter-spacing: -6px; transform: scale(1); } 
         }
 
-        /* --- NAVIGATION --- */
+        /* --- MAIN UI COMPONENTS --- */
         nav { 
             position: fixed; top: 0; width: 100%; height: 85px; z-index: 5000; 
             display: flex; justify-content: space-between; align-items: center; 
@@ -92,7 +91,6 @@
         }
         .logo-motto { font-size: 7px; color: #666; letter-spacing: 1.2px; margin-top: 4px; font-family: 'Montserrat'; font-weight: 900; text-transform: uppercase; }
 
-        /* --- HUB CATEGORIES --- */
         .hub-categories {
             display: flex; gap: 10px; overflow-x: auto; padding: 15px 5%; background: rgba(0,0,0,0.95);
             scrollbar-width: none; white-space: nowrap; 
@@ -106,19 +104,9 @@
         }
         .cat-chip:hover, .cat-chip.active { background: #ff9900; color: #000; border-color: #ff9900; font-weight: 900; }
 
-        /* --- 3D RGB CARDS SECTION --- */
+        /* --- 3D RGB HOVER CARDS --- */
         #vanta-canvas { position: fixed; inset: 0; z-index: 1; }
         #home-page { display: none; position: relative; z-index: 10; perspective: 1200px; padding-top: 155px; } 
-        
-        .section-title { 
-            padding-left: 5%; font-family: 'Orbitron'; font-size: 14px; color: var(--red); 
-            margin: 35px 0 15px; border-left: 4px solid var(--red); margin-left: 5%; 
-            padding-left: 12px; letter-spacing: 2px; font-weight: 900;
-        }
-        .container { 
-            padding: 0 5% 40px; display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; 
-        }
         
         .card { 
             position: relative; border-radius: 20px; overflow: hidden; background: #000; 
@@ -137,64 +125,33 @@
         
         .card img { width: 100%; height: 250px; object-fit: cover; border-radius: 17px 17px 0 0; transition: 0.5s; }
         .card:hover img { transform: scale(1.05); }
-        .card h3 { 
-            font-size: 11px; font-family: 'Montserrat'; font-weight: 700; padding: 15px; 
-            text-align: center; margin: 0; height: 50px; display: flex; align-items: center; justify-content: center; 
-        }
-        .peek-info { 
-            position: absolute; bottom: 55px; left: 0; width: 100%; padding: 10px; 
-            background: linear-gradient(transparent, rgba(0,0,0,0.9)); opacity: 0; 
-            transition: 0.4s; font-size: 9px; font-weight: 900; text-align: center; color: var(--neon-blue); 
-        }
-        .card:hover .peek-info { opacity: 1; }
+        .card h3 { font-size: 11px; font-family: 'Montserrat'; font-weight: 700; padding: 15px; text-align: center; margin: 0; height: 50px; display: flex; align-items: center; justify-content: center; }
 
-        /* --- SIDEBAR FIXED SCROLL --- */
+        /* --- OVERLAYS & PLAYER --- */
         #side-menu { 
             position: fixed; top: 0; right: -320px; width: 310px; height: 100vh; 
             background: rgba(8,8,8,0.98); backdrop-filter: blur(40px); z-index: 6000; 
             transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); padding: 40px 25px 80px; 
-            border-left: 1px solid var(--glass-border); 
-            overflow-y: auto; box-sizing: border-box; 
-            scrollbar-width: thin; scrollbar-color: var(--red) #000;
+            border-left: 1px solid var(--glass-border); overflow-y: auto; box-sizing: border-box; 
         }
-        #side-menu::-webkit-scrollbar { width: 4px; }
-        #side-menu::-webkit-scrollbar-thumb { background: var(--red); }
-
         #side-menu.active { right: 0; }
-        .menu-item { 
-            padding: 15px; color: #888; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); 
-            font-family: 'Montserrat'; font-size: 12px; display: flex; align-items: center; gap: 12px; transition: 0.3s;
-        }
+        .menu-item { padding: 15px; color: #888; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.03); font-family: 'Montserrat'; font-size: 12px; display: flex; align-items: center; gap: 12px; transition: 0.3s; }
         .menu-item:hover { color: #fff; background: rgba(255,0,0,0.1); padding-left: 25px; }
 
-        /* --- PLAYER & OVERLAYS --- */
-        #details-overlay { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(30px); 
-            display: none; z-index: 8000; overflow-y: auto; padding: 80px 5%; 
-        }
         #player-ui { position: fixed; inset: 0; background: #000; display: none; z-index: 25000; }
         .server-container { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 20px; z-index: 30002; }
-        .server-btn { 
-            background: rgba(17,17,17,0.8); color: white; border: 1px solid var(--red); 
-            padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 11px; 
-            font-family: 'Orbitron'; transition: 0.3s;
-        }
+        .server-btn { background: rgba(17,17,17,0.8); color: white; border: 1px solid var(--red); padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 11px; font-family: 'Orbitron'; transition: 0.3s; }
         .server-btn:hover { background: var(--red); box-shadow: 0 0 20px var(--red); }
 
-        /* --- CREDIT BADGE STYLE --- */
-        #credit-badge {
-            position: fixed; bottom: 20px; right: 20px; background: rgba(20,20,20,0.8);
-            backdrop-filter: blur(10px); color: #fff; padding: 8px 15px; border-radius: 30px;
-            font-family: 'Orbitron'; font-size: 9px; z-index: 10000; border: 1px solid rgba(255,255,255,0.1);
-            letter-spacing: 1px; display: flex; align-items: center; gap: 8px;
-        }
+        #credit-badge { position: fixed; bottom: 20px; right: 20px; background: rgba(20,20,20,0.8); backdrop-filter: blur(10px); color: #fff; padding: 8px 15px; border-radius: 30px; font-family: 'Orbitron'; font-size: 9px; z-index: 10000; border: 1px solid rgba(255,255,255,0.1); letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        
+        #details-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.99); backdrop-filter: blur(30px); display: none; z-index: 8000; overflow-y: auto; padding: 80px 5%; }
+        .section-title { padding-left: 5%; font-family: 'Orbitron'; font-size: 14px; color: var(--red); margin: 35px 0 15px; border-left: 4px solid var(--red); margin-left: 5%; padding-left: 12px; letter-spacing: 2px; font-weight: 900; }
+        .container { padding: 0 5% 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 30px; }
 
-        .ep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; margin-top: 20px; }
-        .ep-card { background: rgba(255,255,255,0.05); padding: 18px; border-radius: 12px; cursor: pointer; font-family: 'Montserrat'; transition: 0.3s; border: 1px solid transparent; }
-        .ep-card:hover { background: rgba(255,0,0,0.2); border-color: var(--red); transform: translateX(5px); }
-
-        #admin-modal, #about-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 20000; align-items: center; justify-content: center; }
-        .modal-box { background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; }
+        .ep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
+        .ep-card { background: #111; border: 1px solid #222; padding: 15px; border-radius: 8px; cursor: pointer; font-size: 12px; transition: 0.3s; }
+        .ep-card:hover { border-color: red; background: #1a1111; }
     </style>
 </head>
 <body>
@@ -242,7 +199,6 @@
         <div id="main-content">
             <h2 class="section-title" id="grid-title">LATEST POPULAR</h2>
             <div class="container" id="popular-india"></div>
-            
             <h2 class="section-title">TRENDING IN INDIA</h2>
             <div class="container" id="trending-india"></div>
         </div>
@@ -261,21 +217,32 @@
     <div class="menu-item" onclick="loadGenre(16)"><i class="fa-solid fa-dragon"></i> ANIME</div>
     <div class="menu-item" onclick="loadGenre(18)"><i class="fa-solid fa-masks-theater"></i> DRAMA</div>
     <div style="border-top: 1px solid #222; margin-top:10px;"></div>
-    <div class="menu-item" onclick="openAbout()"><i class="fa-solid fa-circle-info"></i> ABOUT VISION</div>
+    <div class="menu-item" onclick="alert('INDIPLEX VISION 2.0: The Abyssal Void Edition. Cinema Redefined.')"><i class="fa-solid fa-circle-info"></i> ABOUT VISION</div>
     <div id="logout-item" class="menu-item" onclick="adminLogout()" style="display:none; color: #ff3333; font-weight: bold; margin-top: 10px; border-top: 1px solid #331111;"><i class="fa-solid fa-power-off"></i> LOGOUT ADMIN</div>
 </div>
 
 <div id="credit-badge">ENERGY: --</div>
 
-<div id="about-modal"><div class="modal-box"><h2 style="color:red; font-family:'Orbitron';">VISION</h2><p style="color:#777; line-height:1.6;">Privacy first, Cinema next. No ads. High speed servers. Crafted by Y07.</p><button onclick="closeAbout()" style="background:red; color:white; border:none; padding:12px 30px; border-radius:5px; cursor:pointer; font-family:'Orbitron';">CLOSE</button></div></div>
-<div id="admin-modal"><div class="modal-box"><h3 style="color:red; font-family:'Orbitron';">ADMIN ACCESS</h3><input type="text" id="adminUser" placeholder="Username" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><input type="password" id="adminPass" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;"><button onclick="checkLogin()" style="background:red; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-family:'Orbitron';">LOGIN</button></div></div>
+<div id="admin-modal" style="position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; z-index: 20000; align-items: center; justify-content: center;">
+    <div class="modal-box" style="background: #0a0a0a; border: 1px solid var(--red); padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px;">
+        <h3 style="color:red; font-family:'Orbitron';">ADMIN ACCESS</h3>
+        <input type="text" id="adminUser" placeholder="Username" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;">
+        <input type="password" id="adminPass" placeholder="Password" style="width:100%; padding:12px; margin:10px 0; background:#111; border:1px solid #333; color:white;">
+        <button onclick="checkLogin()" style="background:red; color:white; border:none; padding:12px; width:100%; border-radius:5px; cursor:pointer; font-family:'Orbitron';">LOGIN</button>
+    </div>
+</div>
+
 <div id="details-overlay"><div onclick="closeDetails()" style="position:fixed; top:25px; right:35px; font-size:45px; cursor:pointer; color:red; z-index:9000;">&times;</div><div id="details-body"></div></div>
+
 <div id="player-ui">
     <div onclick="closePlayer()" style="position:fixed; top:20px; left:20px; font-size:30px; color:white; cursor:pointer; z-index:30001; background:rgba(0,0,0,0.5); padding:10px; border-radius:50%;"><i class="fa-solid fa-arrow-left"></i></div>
     <div id="player-container" style="width:100%; height:100%;">
-        <iframe id="video-frame" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>
+        <iframe id="video-frame" style="width:100%; height:100%; border:none;" allow="autoplay; fullscreen" sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation" allowfullscreen></iframe>
     </div>
-    <div class="server-container"><button class="server-btn" onclick="changeServer(1)">SERVER 1</button><button class="server-btn" onclick="changeServer(2)">SERVER 2</button></div>
+    <div class="server-container">
+        <button class="server-btn" onclick="changeServer(1)">SERVER 1</button>
+        <button class="server-btn" onclick="changeServer(2)">SERVER 2</button>
+    </div>
 </div>
 
 <script>
@@ -283,56 +250,27 @@
     let currentVideo = { id: null, type: 'movie', s: 1, e: 1 };
     let logoClicks = 0;
 
-    // --- CREDIT SYSTEM LOGIC ---
+    // --- CREDIT SYSTEM ---
     let userCredits = localStorage.getItem('indiplex_credits') ? parseInt(localStorage.getItem('indiplex_credits')) : 240;
     const SMART_LINK = "https://www.effectivegatecpm.com/g3nyyzecfb?key=0aa81739536602bd405ac6607d8103ce";
 
     function startCreditSystem() {
         setInterval(() => {
-            if (localStorage.getItem('isLogged') === 'true') {
-                updateBadge("UNLIMITED ACCESS");
-                return;
-            }
+            if (localStorage.getItem('isLogged') === 'true') { updateBadge("UNLIMITED ACCESS"); return; }
             if (userCredits > 0) {
                 userCredits--;
                 localStorage.setItem('indiplex_credits', userCredits);
                 updateBadge(userCredits + " MINS LEFT");
-            } else {
-                if (document.getElementById('player-ui').style.display === 'block') lockPlayer();
-            }
+            } else if (document.getElementById('player-ui').style.display === 'block') lockPlayer();
         }, 60000);
         updateBadge(localStorage.getItem('isLogged') === 'true' ? "UNLIMITED" : userCredits + " MINS LEFT");
     }
 
     function updateBadge(msg) { document.getElementById('credit-badge').innerHTML = `<i class="fa-solid fa-bolt" style="color:#ffcc00"></i> ${msg}`; }
+    function lockPlayer() { document.getElementById('video-frame').src = ""; document.getElementById('player-container').innerHTML = `<div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#000; color:white; text-align:center; padding:20px;"><h2 style="font-family:'Orbitron'; color:red; font-size:40px;">ENERGY DEPLETED</h2><button onclick="refuelEnergy()" style="background:red; color:white; border:none; padding:18px 40px; border-radius:5px; cursor:pointer; font-family:'Orbitron'; margin-top:30px; box-shadow: 0 0 30px rgba(255,0,0,0.5);">REFUEL ENERGY (+6 HOURS)</button></div>`; }
+    function refuelEnergy() { window.open(SMART_LINK, "_blank"); setTimeout(() => { userCredits = 360; localStorage.setItem('indiplex_credits', userCredits); location.reload(); }, 60000); }
 
-    function lockPlayer() {
-        const container = document.getElementById('player-container');
-        document.getElementById('video-frame').src = "";
-        container.innerHTML = `
-            <div style="height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#000; color:white; text-align:center; padding:20px;">
-                <h2 style="font-family:'Orbitron'; color:red; font-size:40px;">ENERGY DEPLETED</h2>
-                <p style="font-family:'Montserrat'; letter-spacing:1px;">Your 4-hour high-fidelity access has expired.</p>
-                <button onclick="refuelEnergy()" style="background:red; color:white; border:none; padding:18px 40px; border-radius:5px; cursor:pointer; font-family:'Orbitron'; margin-top:30px; box-shadow: 0 0 30px rgba(255,0,0,0.5);">
-                    REFUEL ENERGY (+6 HOURS)
-                </button>
-                <p style="margin-top:20px; font-size:10px; color:#555;">(Wait 60s on the transmission page to restore access)</p>
-            </div>
-        `;
-    }
-
-    function refuelEnergy() {
-        window.open(SMART_LINK, "_blank");
-        alert("Establishing transmission... Please stay on the ad page for 60 seconds.");
-        setTimeout(() => {
-            userCredits = 360;
-            localStorage.setItem('indiplex_credits', userCredits);
-            alert("Energy Restored! +6 Hours Added.");
-            location.reload();
-        }, 60000);
-    }
-
-    // --- ABYSSAL VOID ENGINE ---
+    // --- ABYSS ENGINE (Original Logic) ---
     const canvas = document.getElementById('abyss-canvas');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -354,7 +292,7 @@
         updateLogoutButton();
     }, 6500);
 
-    // --- DYNAMIC DATA LOADING ---
+    // --- MAIN APP LOGIC ---
     async function loadHome() {
         const pop = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`);
         renderGrid('popular-india', (await pop.json()).results);
@@ -363,10 +301,7 @@
     }
 
     async function loadGenre(genreId, element) {
-        if(element) {
-            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
-            element.classList.add('active');
-        }
+        if(element) { document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active')); element.classList.add('active'); }
         if(document.getElementById('side-menu').classList.contains('active')) toggleMenu();
         let url = genreId ? `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&sort_by=popularity.desc` : `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_original_language=hi&sort_by=popularity.desc`;
         const res = await fetch(url);
@@ -379,24 +314,20 @@
     function renderGrid(id, items) {
         document.getElementById(id).innerHTML = items.filter(i => i.poster_path).map(i => `
             <div class="card" onclick="autoDetectType(${i.id}, '${i.media_type || 'movie'}')">
-                <div class="peek-info">${i.vote_average ? i.vote_average.toFixed(1) : '8.0'} ⭐</div>
                 <img src="https://image.tmdb.org/t/p/w500${i.poster_path}">
                 <h3>${i.title || i.name}</h3>
             </div>
         `).join('');
     }
 
-    function autoDetectType(id, type) {
-        if (type === 'tv' || type === 'series') openSeriesSelector(id);
-        else openPlayer(id, 'movie');
-    }
+    function autoDetectType(id, type) { if (type === 'tv' || type === 'series') openSeriesSelector(id); else openPlayer(id, 'movie'); }
 
     async function openSeriesSelector(id) {
         const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}`);
         const data = await res.json();
         currentVideo = { id, type: 'tv', s: 1, e: 1 };
         let html = `<h1 style="font-family:'Orbitron'; font-size:clamp(24px, 5vw, 40px);">${data.name}</h1><div class="season-tabs" style="display:flex; gap:10px; overflow-x:auto; padding-bottom:20px;">`;
-        data.seasons.forEach(s => { if(s.season_number > 0) html += `<div class="s-tab ${s.season_number === 1 ? 'active' : ''}" style="background:#111; border:1px solid #333; padding:10px 20px; cursor:pointer; font-size:10px; border-radius:5px;" onclick="fetchEpisodes(${id}, ${s.season_number})">Season ${s.season_number}</div>`; });
+        data.seasons.forEach(s => { if(s.season_number > 0) html += `<div class="s-tab" style="background:#111; border:1px solid #333; padding:10px 20px; cursor:pointer; font-size:10px; border-radius:5px;" onclick="fetchEpisodes(${id}, ${s.season_number})">Season ${s.season_number}</div>`; });
         html += `</div><div id="episode-list-container" class="ep-grid"></div>`;
         document.getElementById('details-body').innerHTML = html;
         document.getElementById('details-overlay').style.display = 'block';
@@ -409,63 +340,41 @@
         document.getElementById('episode-list-container').innerHTML = data.episodes.map(ep => `<div class="ep-card" onclick="playSeriesEp(${tvId}, ${sNum}, ${ep.episode_number})"><span style="color:red; font-weight:900;">EP ${ep.episode_number}</span> ${ep.name}</div>`).join('');
     }
 
-    function playSeriesEp(id, s, e) {
-        currentVideo = { id, type: 'tv', s, e };
-        document.getElementById('details-overlay').style.display = 'none';
-        openPlayer(id, 'tv');
-    }
+    function playSeriesEp(id, s, e) { currentVideo = { id, type: 'tv', s, e }; document.getElementById('details-overlay').style.display = 'none'; openPlayer(id, 'tv'); }
 
     function openPlayer(id, type) { 
-        if (userCredits <= 0 && localStorage.getItem('isLogged') !== 'true') {
-            document.getElementById('player-ui').style.display = 'block';
-            lockPlayer();
-            return;
-        }
+        if (userCredits <= 0 && localStorage.getItem('isLogged') !== 'true') { document.getElementById('player-ui').style.display = 'block'; lockPlayer(); return; }
         currentVideo.id = id; currentVideo.type = type;
-        document.getElementById('player-ui').style.display = 'block'; 
-        changeServer(1); 
+        document.getElementById('player-ui').style.display = 'block'; changeServer(1); 
     }
 
     function changeServer(num) { 
         const { id, type, s, e } = currentVideo; 
         const frame = document.getElementById('video-frame');
+        // FIX: Server 2 Updated to stable link
         if(type === 'movie') {
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb/${id}`; 
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://www.2embed.cc/embed/${id}`; 
         } else {
             frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
         }
     }
 
-    async function searchGlobal(query) {
+    function searchGlobal(query) {
         const s = document.getElementById('search-section'); const m = document.getElementById('main-content');
         if(query.trim().length < 2) { s.style.display = 'none'; m.style.display = 'block'; return; }
-        const res = await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-        const data = await res.json(); 
-        s.style.display = 'block'; m.style.display = 'none'; 
-        renderGrid('search-grid', data.results);
+        fetch(`https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`)
+        .then(res => res.json()).then(data => { s.style.display = 'block'; m.style.display = 'none'; renderGrid('search-grid', data.results); });
     }
     
     function clearSearch() { document.getElementById('searchInput').value = ''; document.getElementById('search-section').style.display = 'none'; document.getElementById('main-content').style.display = 'block'; }
     function closePlayer() { document.getElementById('player-ui').style.display = 'none'; document.getElementById('video-frame').src = ''; }
     function toggleMenu() { document.getElementById('side-menu').classList.toggle('active'); }
-    function openAbout() { document.getElementById('about-modal').style.display = 'flex'; }
-    function closeAbout() { document.getElementById('about-modal').style.display = 'none'; }
     function openAdmin() { document.getElementById('admin-modal').style.display = 'flex'; }
-    function closeAdmin() { document.getElementById('admin-modal').style.display = 'none'; }
-    function closeDetails() { document.getElementById('details-overlay').style.display = 'none'; }
+    function checkLogin() { if(document.getElementById('adminUser').value === 'sans' && document.getElementById('adminPass').value === '0510') { localStorage.setItem('isLogged', 'true'); location.reload(); } else { alert('Unauthorized'); } }
+    function adminLogout() { localStorage.removeItem('isLogged'); location.reload(); }
+    function updateLogoutButton() { const btn = document.getElementById('logout-item'); if(btn) btn.style.display = localStorage.getItem('isLogged') === 'true' ? 'flex' : 'none'; }
     function logoTrigger() { logoClicks++; if(logoClicks === 10) { openAdmin(); logoClicks = 0; } setTimeout(() => logoClicks = 0, 5000); }
-    function checkLogin() { if(document.getElementById('adminUser').value === 'sans' && document.getElementById('adminPass').value === '0510') { localStorage.setItem('isLogged', 'true'); updateLogoutButton(); alert('Access Granted'); closeAdmin(); location.reload(); } else { alert('Unauthorized'); } }
-    
-    function adminLogout() { 
-        localStorage.removeItem('isLogged'); 
-        alert('Admin Session Ended'); 
-        location.reload(); 
-    }
-    
-    function updateLogoutButton() { 
-        const btn = document.getElementById('logout-item'); 
-        if(btn) btn.style.display = localStorage.getItem('isLogged') === 'true' ? 'flex' : 'none'; 
-    }
+    function closeDetails() { document.getElementById('details-overlay').style.display = 'none'; }
     window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
 </script>
 </body>
