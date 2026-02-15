@@ -287,7 +287,7 @@
         allow="autoplay; fullscreen" 
         sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups allow-popups-to-escape-sandbox" 
         allowfullscreen>
-</iframe>
+        </iframe>
     </div>
     <div class="server-container">
         <button class="server-btn" onclick="changeServer(1)">SERVER 1</button>
@@ -403,14 +403,18 @@
     }
 
     function changeServer(num) { 
-    const { id, type, s, e } = currentVideo; 
-    const frame = document.getElementById('video-frame');
-    if(type === 'movie') {
-        frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb/${id}`; 
-    } else {
-        frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
+        const { id, type, s, e } = currentVideo; 
+        const frame = document.getElementById('video-frame');
+        if(type === 'movie') {
+            // Server 1: VidSrc CC (Best)
+            // Server 2: VidSrc XYZ (Fixed 404 issue)
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.xyz/embed/movie/${id}`; 
+        } else {
+            // Server 1: VidSrc CC
+            // Server 2: VidSrc XYZ
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
+        }
     }
-}
 
     async function searchGlobal(query) {
         const s = document.getElementById('search-section'); const m = document.getElementById('main-content');
@@ -435,6 +439,3 @@
 </script>
 </body>
 </html>
-
-
-
