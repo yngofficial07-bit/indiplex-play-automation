@@ -407,10 +407,10 @@
         const frame = document.getElementById('video-frame');
         if(type === 'movie') {
             // Server 1: VidSrc CC
-            // Server 2: VidSrc XYZ (Highly Stable Backup)
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.xyz/embed/movie?tmdb=${id}`; 
+            // Server 2: VidSrc ME (Working & Stable)
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.me/embed/movie?tmdb=${id}`; 
         } else {
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${s}&episode=${e}`;
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.me/embed/tv?tmdb=${id}&season=${s}&episode=${e}`;
         }
     }
 
