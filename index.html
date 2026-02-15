@@ -402,15 +402,15 @@
         document.getElementById('player-ui').style.display = 'block'; changeServer(1); 
     }
 
-    function changeServer(num) { 
-        const { id, type, s, e } = currentVideo; 
-        const frame = document.getElementById('video-frame');
-        if(type === 'movie') {
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://www.2embed.cc/embed/${id}`; 
-        } else {
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
-        }
+function changeServer(num) { 
+    const { id, type, s, e } = currentVideo; 
+    const frame = document.getElementById('video-frame');
+    if(type === 'movie') {
+        frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://embed.smashystream.com/playere.php?tmdb/${id}`; 
+    } else {
+        frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv/${id}/${s}/${e}`;
     }
+}
 
     async function searchGlobal(query) {
         const s = document.getElementById('search-section'); const m = document.getElementById('main-content');
@@ -435,4 +435,5 @@
 </script>
 </body>
 </html>
+
 
