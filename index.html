@@ -148,13 +148,13 @@
         }
         .card:hover .peek-info { opacity: 1; }
 
-        /* --- SIDEBAR (Updated with Scrolling) --- */
+        /* --- SIDEBAR FIXED SCROLL --- */
         #side-menu { 
-            position: fixed; top: 0; right: -320px; width: 310px; height: 100%; 
+            position: fixed; top: 0; right: -320px; width: 310px; height: 100vh; 
             background: rgba(8,8,8,0.98); backdrop-filter: blur(40px); z-index: 6000; 
-            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); padding: 80px 25px; 
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1); padding: 40px 25px 80px; 
             border-left: 1px solid var(--glass-border); 
-            overflow-y: auto; /* Added vertical scroll */
+            overflow-y: auto; box-sizing: border-box; 
             scrollbar-width: thin; scrollbar-color: var(--red) #000;
         }
         #side-menu::-webkit-scrollbar { width: 4px; }
@@ -250,7 +250,7 @@
 </div>
 
 <div id="side-menu">
-    <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; margin-bottom:30px; color:red;">&times;</div>
+    <div onclick="toggleMenu()" style="text-align:right; font-size:30px; cursor:pointer; margin-bottom:15px; color:red;">&times;</div>
     <div class="menu-item" onclick="location.reload()"><i class="fa-solid fa-house"></i> HOME</div>
     <div style="color:red; font-size:10px; font-family:'Orbitron'; padding:15px; letter-spacing:2px;">CATEGORIES</div>
     <div class="menu-item" onclick="loadGenre(28)"><i class="fa-solid fa-gun"></i> ACTION</div>
