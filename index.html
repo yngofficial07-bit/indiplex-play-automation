@@ -406,11 +406,11 @@
         const { id, type, s, e } = currentVideo; 
         const frame = document.getElementById('video-frame');
         if(type === 'movie') {
-            // Server 1: VidSrc CC (Primary)
-            // Server 2: VidSrc PRO (Working backup with Ads)
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.pro/embed/movie/${id}`; 
+            // Server 1: VidSrc CC
+            // Server 2: VidSrc XYZ (Highly Stable Backup)
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.xyz/embed/movie?tmdb=${id}`; 
         } else {
-            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.pro/embed/tv/${id}/${s}/${e}`;
+            frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.xyz/embed/tv?tmdb=${id}&season=${s}&episode=${e}`;
         }
     }
 
