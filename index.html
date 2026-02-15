@@ -406,12 +406,10 @@
         const { id, type, s, e } = currentVideo; 
         const frame = document.getElementById('video-frame');
         if(type === 'movie') {
-            // Server 1: VidSrc CC
-            // Server 2: VidSrc PRO (ADS but working)
+            // Server 1: VidSrc CC (Primary)
+            // Server 2: VidSrc PRO (Working backup with Ads)
             frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/movie/${id}` : `https://vidsrc.pro/embed/movie/${id}`; 
         } else {
-            // Server 1: VidSrc CC
-            // Server 2: VidSrc PRO (ADS but working)
             frame.src = num === 1 ? `https://vidsrc.cc/v2/embed/tv/${id}/${s}/${e}` : `https://vidsrc.pro/embed/tv/${id}/${s}/${e}`;
         }
     }
